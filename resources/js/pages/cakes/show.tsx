@@ -7,12 +7,12 @@ import {
     MessageCircle,
 } from 'lucide-react';
 import { useState } from 'react';
-import AppLogoIcon from '@/components/app-logo-icon';
 import { CakeImage } from '@/components/cake-image-placeholder';
+import { PublicFooter, PublicHeader } from '@/components/public-layout';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { formatRupiah } from '@/lib/utils';
-import { home } from '@/routes';
+import catalog from '@/routes/catalog';
 
 type CakeOptionItem = {
     id: number;
@@ -71,21 +71,17 @@ export default function CakeShow({ cake, whatsappUrl }: Props) {
             <Head title={`${cake.name} — TBloom Cake`} />
 
             <div className="min-h-screen bg-background text-foreground">
-                <header className="border-b border-border/80 bg-card/85 backdrop-blur-xs">
-                    <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
-                        <Link href={home()} className="flex items-center">
-                            <AppLogoIcon className="h-10 w-auto" />
-                        </Link>
+                <PublicHeader />
+
+                <main className="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8 lg:py-10">
+                    <div className="mb-6">
                         <Button asChild variant="outline" size="sm">
-                            <Link href={home()}>
+                            <Link href={catalog.index()}>
                                 <ArrowLeft className="mr-1.5 size-4" />
                                 Kembali ke Katalog
                             </Link>
                         </Button>
                     </div>
-                </header>
-
-                <main className="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8 lg:py-12">
                     <div className="grid gap-8 lg:grid-cols-2">
                         <div className="space-y-4">
                             <div className="aspect-[4/3] overflow-hidden rounded-xl border border-border bg-card shadow-sm">
@@ -280,6 +276,8 @@ export default function CakeShow({ cake, whatsappUrl }: Props) {
                         </div>
                     </div>
                 </main>
+
+                <PublicFooter whatsappUrl={whatsappUrl} />
             </div>
         </>
     );

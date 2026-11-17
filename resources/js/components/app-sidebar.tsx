@@ -20,8 +20,9 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
-import { dashboard, home } from '@/routes';
+import { dashboard } from '@/routes';
 import admin from '@/routes/admin';
+import catalog from '@/routes/catalog';
 import owner from '@/routes/owner';
 import type { NavItem } from '@/types';
 
@@ -44,7 +45,7 @@ export function AppSidebar() {
                   },
                   {
                       title: 'Katalog Publik',
-                      href: home(),
+                      href: catalog.index(),
                       icon: Store,
                   },
               ]
@@ -77,14 +78,14 @@ export function AppSidebar() {
                     },
                     {
                         title: 'Katalog Publik',
-                        href: home(),
+                        href: catalog.index(),
                         icon: Store,
                     },
                 ]
               : [
                     {
                         title: 'Katalog Kue',
-                        href: home(),
+                        href: catalog.index(),
                         icon: Store,
                     },
                 ];
