@@ -304,4 +304,19 @@
     body {
         @apply bg-background font-sans text-foreground selection:bg-espresso selection:text-soft-blush;
     }
+
+    .dark body {
+        letter-spacing: 0.005em;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4 {
+        text-wrap: balance;
+    }
+
+    p {
+        text-wrap: pretty;
+    }
 }
