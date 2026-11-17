@@ -1,7 +1,14 @@
-import { Link } from '@inertiajs/react';
-import { BookOpen, FolderGit2, LayoutGrid } from 'lucide-react';
+import { Link, usePage } from '@inertiajs/react';
+import {
+    Cake,
+    CalendarClock,
+    FolderTree,
+    LayoutGrid,
+    SlidersHorizontal,
+    Store,
+    Users,
+} from 'lucide-react';
 import AppLogo from '@/components/app-logo';
-import { NavFooter } from '@/components/nav-footer';
 import { NavMain } from '@/components/nav-main';
 import { NavUser } from '@/components/nav-user';
 import {
@@ -13,31 +20,75 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
-import { dashboard } from '@/routes';
+import { dashboard, home } from '@/routes';
+import admin from '@/routes/admin';
+import owner from '@/routes/owner';
 import type { NavItem } from '@/types';
 
-const mainNavItems: NavItem[] = [
-    {
-        title: 'Dashboard',
-        href: dashboard(),
-        icon: LayoutGrid,
-    },
-];
-
-const footerNavItems: NavItem[] = [
-    {
-        title: 'Repository',
-        href: 'https://github.com/laravel/react-starter-kit',
-        icon: FolderGit2,
-    },
-    {
-        title: 'Documentation',
-        href: 'https://laravel.com/docs/starter-kits#react',
-        icon: BookOpen,
-    },
-];
-
 export function AppSidebar() {
+    const { auth } = usePage().props;
+    const role = auth.user?.role;
+
+    const mainNavItems: NavItem[] =
+        role === 'owner'
+            ? [
+                  {
+                      title: 'Dashboard Owner',
+                      href: owner.dashboard(),
+                      icon: LayoutGrid,
+                  },
+                  {
+                      title: 'Kelola Admin',
+                      href: owner.admins.index(),
+                      icon: Users,
+                  },
+                  {
+                      title: 'Katalog Publik',
+                      href: home(),
+                      icon: Store,
+                  },
+              ]
+            : role === 'admin'
+              ? [
+                    {
+                        title: 'Dashboard Admin',
+                        href: admin.dashboard(),
+                        icon: LayoutGrid,
+                    },
+                    {
+                        title: 'Kategori Kue',
+                        href: admin.categories.index(),
+                        icon: FolderTree,
+                    },
+                    {
+                        title: 'Katalog Kue',
+                        href: admin.cakes.index(),
+                        icon: Cake,
+                    },
+                    {
+                        title: 'Opsi Kue',
+                        href: admin.options.index(),
+                        icon: SlidersHorizontal,
+                    },
+                    {
+                        title: 'Kapasitas & Slot',
+                        href: admin.capacities.index(),
+                        icon: CalendarClock,
+                    },
+                    {
+                        title: 'Katalog Publik',
+                        href: home(),
+                        icon: Store,
+                    },
+                ]
+              : [
+                    {
+                        title: 'Katalog Kue',
+                        href: home(),
+                        icon: Store,
+                    },
+                ];
+
     return (
         <Sidebar collapsible="icon" variant="inset">
             <SidebarHeader>
@@ -57,7 +108,6 @@ export function AppSidebar() {
             </SidebarContent>
 
             <SidebarFooter>
-                <NavFooter items={footerNavItems} className="mt-auto" />
                 <NavUser />
             </SidebarFooter>
         </Sidebar>
