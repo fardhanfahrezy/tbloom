@@ -116,26 +116,26 @@ Untuk menjaga kesederhanaan operasional usaha kue skala kecil, fitur-fitur berik
 
 ---
 
-## 8. Daftar Keputusan yang Menunggu Konfirmasi (`PENDING DECISIONS`)
+## 8. Keputusan Operasional & Integrasi yang Telah Disepakati (`[CONFIRMED]`)
 
-Keputusan berikut telah diidentifikasi dan wajib disepakati bersama pemilik proyek sebelum logika terkait dikodekan:
+Seluruh keputusan berikut telah disepakati bersama pemilik proyek:
 
-### 8.1 Pending Decisions Resmi Terkait Kapasitas Produksi Harian
-1. **`[PENDING DECISION - CAP-01]` Kapasitas Default Global atau Per Tanggal:**
-   - Apakah sistem memiliki satu angka kapasitas default harian global (mis. default 10 kue/hari) yang dapat di-*override* pada tanggal-tanggal tertentu oleh Admin, atau Admin harus membuka/mengisi kuota setiap tanggal secara manual?
-2. **`[PENDING DECISION - CAP-02]` Status Pesanan yang Mulai Memotong Kapasitas:**
-   - Apakah kapasitas harian langsung terpakai saat pesanan dibuat (`Pending` / `Menunggu pembayaran`), atau baru terpakai setelah pembayaran terkonfirmasi (`Pembayaran dikonfirmasi` / `Pesanan diterima`)?
-3. **`[PENDING DECISION - CAP-03]` Pengembalian Kapasitas Saat Pembayaran Gagal / Kedaluwarsa / Dibatalkan:**
-   - Jika kapasitas dipotong sejak pesanan dibuat, apakah kuota otomatis dikembalikan ketika transaksi Midtrans kedaluwarsa (`expire`/`cancel`/`deny`) atau saat pesanan ditolak oleh Admin?
-4. **`[PENDING DECISION - CAP-04]` Kebijakan Penurunan Kapasitas oleh Admin:**
-   - Jika pada suatu tanggal sudah ada 5 kue yang dipesan, apakah Admin dilarang menurunkan kapasitas maksimum tanggal tersebut menjadi di bawah 5 (mis. 3), atau tetap diizinkan dengan status kapasitas menjadi penuh (`Sisa = 0`) tanpa membatalkan pesanan yang sudah masuk?
-5. **`[PENDING DECISION - CAP-05]` Perbedaan Bobot Kapasitas Berdasarkan Jenis dan Ukuran Cake:**
-   - Apakah setiap kue selalu dihitung memiliki bobot `1 unit` kapasitas tanpa memandang ukuran/jenisnya, atau ukuran besar/produk tertentu dapat memakan bobot lebih dari 1 unit kapasitas? (Saat ini spesifikasi dasar menyebutkan: *"dihitung berdasarkan total unit cake"*).
+### 8.1 Keputusan Kapasitas Produksi Harian (`[CONFIRMED]`)
+1. **`[CONFIRMED - CAP-01]` Kapasitas Default Global + Override Per Tanggal:**
+   - Sistem memiliki nilai kapasitas maksimum harian default global (dikelola Admin/Owner) yang otomatis berlaku untuk semua tanggal, dan Admin dapat melakukan *override* angka kapasitas atau menutup tanggal tertentu.
+2. **`[CONFIRMED - CAP-02]` Status Pesanan yang Mulai Memotong Kapasitas:**
+   - Kapasitas harian langsung terpakai (`used_capacity + 1`) **saat pesanan dibuat** (`Pending` / `Menunggu pembayaran`) di dalam `DB::transaction` + `lockForUpdate()`, sehingga mencegah dua Customer berebut slot terakhir saat sedang membayar di Midtrans.
+3. **`[CONFIRMED - CAP-03]` Pengembalian Kapasitas Saat Pembayaran Gagal / Kedaluwarsa:**
+   - Sistem otomatis mengembalikan 1 unit kapasitas ke tanggal tersebut ketika webhook Midtrans melaporkan status `expire`, `cancel`, atau `deny` (atau ketika Admin menandai pesanan gagal/ditolak).
+4. **`[CONFIRMED - CAP-04]` Kebijakan Penurunan Kapasitas oleh Admin:**
+   - Admin **dilarang** menurunkan `Kapasitas Maksimum` pada suatu tanggal menjadi lebih kecil daripada `Total Cake Terpakai` yang sudah masuk (`max_capacity >= used_capacity`).
+5. **`[CONFIRMED - CAP-05]` Bobot Kapasitas:**
+   - Setiap 1 unit kue memiliki bobot kapasitas yang sama (**1 kue = 1 kapasitas**) tanpa perbedaan berdasarkan jenis maupun ukuran kue.
 
-### 8.2 Pending Decisions Tambahan (Operasional & Integrasi)
-6. **`[PENDING DECISION - AUTH-01]` Kedudukan Email vs Nomor WhatsApp pada Akun Pengguna:**
-   - Pada saat registrasi Customer menggunakan OTP WhatsApp (Fonnte API), apakah login berikutnya menggunakan **Nomor WhatsApp + Password**, **Email + Password**, atau keduanya?
-7. **`[PENDING DECISION - MID-01]` Metode Pembayaran Midtrans & Perhitungan Fee:**
-   - Metode pembayaran Midtrans apa saja yang diaktifkan (QRIS, Virtual Account Bank, GoPay/ShopeePay, Snap Popup vs Core API) sehingga rumus pembebanan *fee* Midtrans ke Customer dapat dihitung secara presisi sebelum token pembayaran dibuat?
-8. **`[PENDING DECISION - WA-01]` Nomor WhatsApp Tujuan & Template Pesan CTA Custom Cake:**
-   - Apakah nomor WhatsApp penjual untuk tombol CTA *"Pesan Kue Custom"* disimpan di `.env` / konfigurasi aplikasi atau dapat diubah oleh Admin/Owner melalui dashboard?
+### 8.2 Keputusan Autentikasi, Midtrans, & CTA WhatsApp (`[CONFIRMED]`)
+6. **`[CONFIRMED - AUTH-01]` Kredensial Registrasi & Login Customer:**
+   - Customer mendaftar menggunakan **Nama + Nomor WhatsApp (verifikasi OTP Fonnte) + Email + Password**, dan dapat login menggunakan **Email atau Nomor WhatsApp + Password**.
+7. **`[CONFIRMED - MID-01]` Metode Pembayaran Midtrans & Perhitungan Fee:**
+   - Menggunakan **Midtrans Snap** (QRIS, Virtual Account, E-Wallet) dengan biaya layanan (*fee*) yang dikonfigurasi Admin/config (flat atau persentase) dan ditampilkan secara transparan pada ringkasan harga Tahap 3 sebelum popup Snap dibuka.
+8. **`[CONFIRMED - WA-01]` Pengelolaan Nomor WhatsApp CTA Custom Cake:**
+   - Nomor WhatsApp penjual untuk tombol CTA *"Pesan Kue Custom"* disimpan di pengaturan database (dapat diubah Admin/Owner) dengan fallback ke `.env` (`WHATSAPP_ADMIN_NUMBER`).
