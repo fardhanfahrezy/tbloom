@@ -48,17 +48,19 @@ resources/js/
 ```
 
 ### 2.1 Aset Desain Brand TBloom Cake di `resources/` (`[FACT - In Progress / Belum Diintegrasikan ke app.css]`)
+
 Di dalam direktori `resources/` telah tersedia aset desain khusus **TBloom Cake** yang disiapkan untuk menggantikan tema neutral bawaan starter kit:
+
 1. **Palet Warna Brand (`resources/css/palette.scss`):**
-   - `--coffee-bean`: `#251306` (`hsla(25, 72%, 8%, 1)`)
-   - `--espresso`: `#512323` (`hsla(0, 40%, 23%, 1)`)
-   - `--dark-coffee`: `#442818` (`hsla(22, 48%, 18%, 1)`)
-   - `--stone-brown`: `#726251` (`hsla(31, 17%, 38%, 1)`)
-   - `--khaki-beige`: `#c3b59c` (`hsla(38, 25%, 69%, 1)`)
-   - `--soft-blush`: `#f7e3df` (`hsla(10, 60%, 92%, 1)`)
+    - `--coffee-bean`: `#251306` (`hsla(25, 72%, 8%, 1)`)
+    - `--espresso`: `#512323` (`hsla(0, 40%, 23%, 1)`)
+    - `--dark-coffee`: `#442818` (`hsla(22, 48%, 18%, 1)`)
+    - `--stone-brown`: `#726251` (`hsla(31, 17%, 38%, 1)`)
+    - `--khaki-beige`: `#c3b59c` (`hsla(38, 25%, 69%, 1)`)
+    - `--soft-blush`: `#f7e3df` (`hsla(10, 60%, 92%, 1)`)
 2. **Tipografi Brand (`resources/fonts/Poppins/`):**
-   - Berisi 18 file font lokal `Poppins-*.ttf` (`Thin` hingga `Black` beserta varian `Italic`).
-   - *Catatan Gap:* Saat ini `resources/css/app.css` dan `vite.config.ts` masih memuat `Instrument Sans` dan token warna `neutral` bawaan starter kit; integrasi font `Poppins` dan token warna `palette.scss` ke `@theme` di `resources/css/app.css` berstatus **`Planned`**.
+    - Berisi 18 file font lokal `Poppins-*.ttf` (`Thin` hingga `Black` beserta varian `Italic`).
+    - _Catatan Gap:_ Saat ini `resources/css/app.css` dan `vite.config.ts` masih memuat `Instrument Sans` dan token warna `neutral` bawaan starter kit; integrasi font `Poppins` dan token warna `palette.scss` ke `@theme` di `resources/css/app.css` berstatus **`Planned`**.
 
 ---
 
@@ -67,13 +69,15 @@ Di dalam direktori `resources/` telah tersedia aset desain khusus **TBloom Cake*
 Bagian ini mendefinisikan bagaimana halaman dan komponen baru untuk **TBloom Cake** harus diorganisasikan agar tetap konsisten dengan arsitektur Inertia v3 yang sudah ada:
 
 ### 3.1 Pemisahan Layout Berdasarkan Role & Area (`resources/js/app.tsx`)
+
 - **Halaman Publik & Katalog (`welcome`, `catalog/*`):** Menggunakan layout publik (`PublicLayout` / header katalog) yang menampilkan navigasi Katalog, tombol CTA WhatsApp Custom Cake, serta tombol Login/Register (atau menu pesanan/akun jika Customer sudah login).
 - **Halaman Autentikasi (`auth/*`):** Menggunakan `AuthLayout` (`AuthSimpleLayout`). Komponen `input-otp` yang sudah terpasang di `resources/js/components/ui/input-otp.tsx` dapat digunakan langsung untuk halaman verifikasi OTP WhatsApp Fonnte (`auth/verify-whatsapp.tsx`).
 - **Halaman Dashboard Admin (`admin/*`) & Dashboard Owner (`owner/*`):** Menggunakan `AppLayout` (`AppSidebarLayout`), di mana `AppSidebar` (`resources/js/components/app-sidebar.tsx`) menampilkan daftar menu navigasi sesuai `auth.user.role`:
-  - Jika `role === 'owner'`: Menu **Dashboard Statistik** dan **Manajemen Admin**.
-  - Jika `role === 'admin'`: Menu **Dashboard Operasional**, **Pesanan**, **Produk Kue**, **Kategori**, **Opsi (Ukuran/Flavor/Filling)**, dan **Kapasitas & Slot Jam**.
+    - Jika `role === 'owner'`: Menu **Dashboard Statistik** dan **Manajemen Admin**.
+    - Jika `role === 'admin'`: Menu **Dashboard Operasional**, **Pesanan**, **Produk Kue**, **Kategori**, **Opsi (Ukuran/Flavor/Filling)**, dan **Kapasitas & Slot Jam**.
 
 ### 3.2 Arsitektur Komponen Stepper 3 Tahap Pemesanan Kue (`[CONFIRMED - Planned]`)
+
 Sesuai ketentuan implementasi Stepper di spesifikasi bisnis:
 
 ```mermaid
@@ -89,14 +93,15 @@ flowchart LR
 ```
 
 **Aturan Teknis Implementasi Stepper di React:**
+
 1. **Single Parent State Container (`pages/orders/create.tsx`):**
-   - Seluruh state form dari Tahap 1, Tahap 2, dan Tahap 3 disimpan pada komponen induk `OrderCreate` (bukan di-unmount tanpa penyimpanan di sub-komponen), sehingga ketika pelanggan menekan tombol **Kembali**, seluruh input (termasuk file foto yang dipilih dan catatan khusus) **tetap utuh**.
+    - Seluruh state form dari Tahap 1, Tahap 2, dan Tahap 3 disimpan pada komponen induk `OrderCreate` (bukan di-unmount tanpa penyimpanan di sub-komponen), sehingga ketika pelanggan menekan tombol **Kembali**, seluruh input (termasuk file foto yang dipilih dan catatan khusus) **tetap utuh**.
 2. **Validasi Per-Tahap Sebelum Maju:**
-   - Pelanggan tidak dapat menekan indikator langkah di atas untuk melompat ke Tahap 2 atau Tahap 3 jika tahap sebelumnya belum tervalidasi.
-   - Saat menekan tombol **Selanjutnya**, frontend memvalidasi kelengkapan field wajib tahap aktif dan memanggil pemeriksaan backend (via `useHttp()` atau partial validation Inertia) untuk memastikan tanggal memenuhi `minimum_order_days` serta `Sisa Kapasitas >= 1`.
+    - Pelanggan tidak dapat menekan indikator langkah di atas untuk melompat ke Tahap 2 atau Tahap 3 jika tahap sebelumnya belum tervalidasi.
+    - Saat menekan tombol **Selanjutnya**, frontend memvalidasi kelengkapan field wajib tahap aktif dan memanggil pemeriksaan backend (via `useHttp()` atau partial validation Inertia) untuk memastikan tanggal memenuhi `minimum_order_days` serta `Sisa Kapasitas >= 1`.
 3. **Aturan Kondisional UI yang Wajib Ditegakkan:**
-   - **Upload Foto:** Hanya dirender jika `cake.allow_image_upload === true`.
-   - **Alamat Pengiriman:** Hanya dirender dan wajib diisi jika `fulfillment_method === 'delivery'`.
-   - **Metode Pembayaran Cash:** Jika `fulfillment_method === 'delivery'`, opsi **Cash** wajib dinonaktifkan/disembunyikan (dengan keterangan bahwa pembayaran Cash hanya tersedia untuk *Pickup* di toko / tidak melayani COD), dan jika sebelumnya terpilih `cash` lalu pelanggan mengubah metode ke `delivery`, pilihan pembayaran otomatis di-reset.
-   - **Tombol Konfirmasi Pesanan:** Hanya dirender pada **Tahap 3**.
-   - **Tampilan Kapasitas & Harga:** Sisa kapasitas dan rincian total harga (Harga Dasar + Ukuran + Flavor/Filling + Fee Midtrans) diambil dari respons perhitungan backend, bukan dihitung secara independen tanpa sinkronisasi backend.
+    - **Upload Foto:** Hanya dirender jika `cake.allow_image_upload === true`.
+    - **Alamat Pengiriman:** Hanya dirender dan wajib diisi jika `fulfillment_method === 'delivery'`.
+    - **Metode Pembayaran Cash:** Jika `fulfillment_method === 'delivery'`, opsi **Cash** wajib dinonaktifkan/disembunyikan (dengan keterangan bahwa pembayaran Cash hanya tersedia untuk _Pickup_ di toko / tidak melayani COD), dan jika sebelumnya terpilih `cash` lalu pelanggan mengubah metode ke `delivery`, pilihan pembayaran otomatis di-reset.
+    - **Tombol Konfirmasi Pesanan:** Hanya dirender pada **Tahap 3**.
+    - **Tampilan Kapasitas & Harga:** Sisa kapasitas dan rincian total harga (Harga Dasar + Ukuran + Flavor/Filling + Fee Midtrans) diambil dari respons perhitungan backend, bukan dihitung secara independen tanpa sinkronisasi backend.

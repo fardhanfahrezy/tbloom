@@ -1,6 +1,7 @@
 # Alur Pengguna (User Flow) — TBloom Cake
 
 Dokumen ini mendokumentasikan alur pengguna untuk seluruh aktor di sistem **TBloom Cake (`tbloom`)**, dengan membedakan secara jelas antara:
+
 - **Alur yang Sudah Diimplementasikan di Kode (`[FACT - Implemented]`)**
 - **Alur Bisnis Resmi yang Direncanakan (`[CONFIRMED - Planned]`)**
 
@@ -123,9 +124,9 @@ flowchart LR
 ## 6. Alur Autentikasi & Pengaturan Akun yang Sudah Berjalan (`[FACT - Implemented]`)
 
 1. **Alur Login Email/Password, 2FA, & Passkey:**
-   - Pengguna membuka `GET /login` (`resources/js/pages/auth/login.tsx`), dapat memilih tombol **Sign in with a passkey** (`usePasskeyVerify`) atau mengisi email & password (`POST /login`).
-   - Jika pengguna memiliki 2FA aktif, pengguna diarahkan ke `GET /two-factor-challenge` (`resources/js/pages/auth/two-factor-challenge.tsx`) untuk memasukkan kode OTP 6 digit atau *recovery code*.
+    - Pengguna membuka `GET /login` (`resources/js/pages/auth/login.tsx`), dapat memilih tombol **Sign in with a passkey** (`usePasskeyVerify`) atau mengisi email & password (`POST /login`).
+    - Jika pengguna memiliki 2FA aktif, pengguna diarahkan ke `GET /two-factor-challenge` (`resources/js/pages/auth/two-factor-challenge.tsx`) untuk memasukkan kode OTP 6 digit atau _recovery code_.
 2. **Alur Pengaturan Akun (`/settings/*`):**
-   - **Profile (`/settings/profile`):** Mengubah nama & email (`PATCH /settings/profile`) atau menghapus akun permanen (`DELETE /settings/profile` dengan konfirmasi password).
-   - **Security (`/settings/security`):** Dilindungi middleware `RequirePassword` (konfirmasi password atau passkey di `/user/confirm-password`). Pengguna dapat mengganti password, mengaktifkan/menonaktifkan 2FA TOTP, dan menambah/menghapus Passkeys WebAuthn.
-   - **Appearance (`/settings/appearance`):** Memilih tema *Light*, *Dark*, atau *System* yang disimpan di `localStorage` dan cookie `appearance`.
+    - **Profile (`/settings/profile`):** Mengubah nama & email (`PATCH /settings/profile`) atau menghapus akun permanen (`DELETE /settings/profile` dengan konfirmasi password).
+    - **Security (`/settings/security`):** Dilindungi middleware `RequirePassword` (konfirmasi password atau passkey di `/user/confirm-password`). Pengguna dapat mengganti password, mengaktifkan/menonaktifkan 2FA TOTP, dan menambah/menghapus Passkeys WebAuthn.
+    - **Appearance (`/settings/appearance`):** Memilih tema _Light_, _Dark_, atau _System_ yang disimpan di `localStorage` dan cookie `appearance`.

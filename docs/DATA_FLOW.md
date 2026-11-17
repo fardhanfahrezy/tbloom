@@ -62,8 +62,9 @@ sequenceDiagram
 ## 3. Aliran Data Validasi Tanggal, Locking Kapasitas Produksi Harian, & Kalkulasi Harga (`[CONFIRMED - Planned]`)
 
 Aliran data ini adalah bagian paling kritis untuk menjamin:
-1. Tidak ada manipulasi harga dari sisi klien (*client-side tampering*).
-2. Tidak terjadi *overbooking* (*race condition*) pada kapasitas produksi harian.
+
+1. Tidak ada manipulasi harga dari sisi klien (_client-side tampering_).
+2. Tidak terjadi _overbooking_ (_race condition_) pada kapasitas produksi harian.
 
 ```mermaid
 sequenceDiagram
