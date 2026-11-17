@@ -35,4 +35,20 @@ return [
         ],
     ],
 
+    'fonnte' => [
+        'api_url' => env('FONNTE_API_URL', 'https://api.fonnte.com/send'),
+        'token' => env('FONNTE_TOKEN'),
+    ],
+
+    'midtrans' => [
+        'merchant_id' => env('MIDTRANS_MERCHANT_ID'),
+        'client_key' => env('MIDTRANS_CLIENT_KEY'),
+        'server_key' => env('MIDTRANS_SERVER_KEY'),
+        'is_production' => (bool) env('MIDTRANS_IS_PRODUCTION', false),
+    ],
+
+    'whatsapp' => [
+        'admin_number' => env('WHATSAPP_ADMIN_NUMBER'),
+    ],
+
 ];
