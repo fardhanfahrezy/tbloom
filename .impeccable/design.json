@@ -1,149 +1,259 @@
 {
-  "schemaVersion": 2,
-  "generatedAt": "2026-11-17T22:36:30+07:00",
-  "title": "Design System: TBloom Cake",
-  "extensions": {
-    "colorMeta": {
-      "espresso": {
-        "role": "primary",
-        "displayName": "Deep Espresso",
-        "canonical": "#512323",
-        "tonalRamp": ["#210d0d", "#331515", "#512323", "#6d3434", "#8c4d4d", "#ab6e6e", "#cfa1a1", "#f0dada"]
-      },
-      "soft-blush": {
-        "role": "secondary",
-        "displayName": "Soft Blush",
-        "canonical": "#f7e3df",
-        "tonalRamp": ["#3b2420", "#593731", "#7a4e46", "#9d685f", "#c18a80", "#dfb0a8", "#f7e3df", "#fdf5f3"]
-      },
-      "dark-coffee": {
-        "role": "secondary",
-        "displayName": "Dark Coffee",
-        "canonical": "#442818",
-        "tonalRamp": ["#1c0f08", "#2d1a0e", "#442818", "#5f3a24", "#7c4e33", "#9b6b4f", "#be947b", "#e6d2c5"]
-      },
-      "coffee-bean": {
-        "role": "neutral",
-        "displayName": "Coffee Bean",
-        "canonical": "#251306",
-        "tonalRamp": ["#120902", "#251306", "#3a210f", "#53321b", "#6f472c", "#8d6346", "#b58f74", "#e3cfc1"]
-      },
-      "stone-brown": {
-        "role": "neutral",
-        "displayName": "Stone Brown",
-        "canonical": "#726251",
-        "tonalRamp": ["#26201a", "#3d332a", "#574a3d", "#726251", "#8d7c6b", "#aa9a89", "#c9bdb0", "#ebe5df"]
-      },
-      "khaki-beige": {
-        "role": "secondary",
-        "displayName": "Khaki Beige",
-        "canonical": "#c3b59c",
-        "tonalRamp": ["#332e25", "#4c4538", "#69604f", "#877c67", "#a59881", "#c3b59c", "#ddd3c1", "#f4efe6"]
-      },
-      "warm-porcelain": {
-        "role": "neutral",
-        "displayName": "Warm Porcelain",
-        "canonical": "#fdf9f8",
-        "tonalRamp": ["#382d2b", "#544542", "#74605c", "#967f7b", "#b8a29e", "#d8c7c4", "#f0e6e4", "#fdf9f8"]
-      }
+    "schemaVersion": 2,
+    "generatedAt": "2026-11-17T22:36:30+07:00",
+    "title": "Design System: TBloom Cake",
+    "extensions": {
+        "colorMeta": {
+            "espresso": {
+                "role": "primary",
+                "displayName": "Deep Espresso",
+                "canonical": "#512323",
+                "tonalRamp": [
+                    "#210d0d",
+                    "#331515",
+                    "#512323",
+                    "#6d3434",
+                    "#8c4d4d",
+                    "#ab6e6e",
+                    "#cfa1a1",
+                    "#f0dada"
+                ]
+            },
+            "soft-blush": {
+                "role": "secondary",
+                "displayName": "Soft Blush",
+                "canonical": "#f7e3df",
+                "tonalRamp": [
+                    "#3b2420",
+                    "#593731",
+                    "#7a4e46",
+                    "#9d685f",
+                    "#c18a80",
+                    "#dfb0a8",
+                    "#f7e3df",
+                    "#fdf5f3"
+                ]
+            },
+            "dark-coffee": {
+                "role": "secondary",
+                "displayName": "Dark Coffee",
+                "canonical": "#442818",
+                "tonalRamp": [
+                    "#1c0f08",
+                    "#2d1a0e",
+                    "#442818",
+                    "#5f3a24",
+                    "#7c4e33",
+                    "#9b6b4f",
+                    "#be947b",
+                    "#e6d2c5"
+                ]
+            },
+            "coffee-bean": {
+                "role": "neutral",
+                "displayName": "Coffee Bean",
+                "canonical": "#251306",
+                "tonalRamp": [
+                    "#120902",
+                    "#251306",
+                    "#3a210f",
+                    "#53321b",
+                    "#6f472c",
+                    "#8d6346",
+                    "#b58f74",
+                    "#e3cfc1"
+                ]
+            },
+            "stone-brown": {
+                "role": "neutral",
+                "displayName": "Stone Brown",
+                "canonical": "#726251",
+                "tonalRamp": [
+                    "#26201a",
+                    "#3d332a",
+                    "#574a3d",
+                    "#726251",
+                    "#8d7c6b",
+                    "#aa9a89",
+                    "#c9bdb0",
+                    "#ebe5df"
+                ]
+            },
+            "khaki-beige": {
+                "role": "secondary",
+                "displayName": "Khaki Beige",
+                "canonical": "#c3b59c",
+                "tonalRamp": [
+                    "#332e25",
+                    "#4c4538",
+                    "#69604f",
+                    "#877c67",
+                    "#a59881",
+                    "#c3b59c",
+                    "#ddd3c1",
+                    "#f4efe6"
+                ]
+            },
+            "warm-porcelain": {
+                "role": "neutral",
+                "displayName": "Warm Porcelain",
+                "canonical": "#fdf9f8",
+                "tonalRamp": [
+                    "#382d2b",
+                    "#544542",
+                    "#74605c",
+                    "#967f7b",
+                    "#b8a29e",
+                    "#d8c7c4",
+                    "#f0e6e4",
+                    "#fdf9f8"
+                ]
+            }
+        },
+        "typographyMeta": {
+            "display": {
+                "displayName": "Display",
+                "purpose": "Judul hero landing page dan judul utama katalog."
+            },
+            "headline": {
+                "displayName": "Headline",
+                "purpose": "Judul halaman autentikasi, detail kue, dan ringkasan dashboard."
+            },
+            "title": {
+                "displayName": "Title",
+                "purpose": "Judul kartu produk, tahapan Stepper, dan panel pengaturan."
+            },
+            "body": {
+                "displayName": "Body",
+                "purpose": "Deskripsi kue, informasi form, dan isi tabel."
+            },
+            "label": {
+                "displayName": "Label",
+                "purpose": "Label form, badge status, dan metadata slot jadwal."
+            }
+        },
+        "shadows": [
+            {
+                "name": "control-subtle",
+                "value": "0 1px 2px 0 rgba(37, 19, 6, 0.06)",
+                "purpose": "Kedalaman minimal pada tombol dan input agar terasa tactile."
+            },
+            {
+                "name": "card-ambient",
+                "value": "0 1px 3px 0 rgba(37, 19, 6, 0.08), 0 1px 2px -1px rgba(37, 19, 6, 0.04)",
+                "purpose": "Bayangan ringan pada kartu konten dan panel."
+            },
+            {
+                "name": "focus-ring",
+                "value": "0 0 0 3px rgba(114, 98, 81, 0.35)",
+                "purpose": "Cincin fokus aksesibel saat navigasi keyboard."
+            }
+        ],
+        "motion": [
+            {
+                "name": "ease-tactile",
+                "value": "cubic-bezier(0.22, 1, 0.36, 1)",
+                "purpose": "Transisi warna, border, dan shadow yang responsif."
+            }
+        ],
+        "breakpoints": [
+            { "name": "sm", "value": "640px" },
+            { "name": "md", "value": "768px" },
+            { "name": "lg", "value": "1024px" },
+            { "name": "xl", "value": "1280px" }
+        ]
     },
-    "typographyMeta": {
-      "display": { "displayName": "Display", "purpose": "Judul hero landing page dan judul utama katalog." },
-      "headline": { "displayName": "Headline", "purpose": "Judul halaman autentikasi, detail kue, dan ringkasan dashboard." },
-      "title": { "displayName": "Title", "purpose": "Judul kartu produk, tahapan Stepper, dan panel pengaturan." },
-      "body": { "displayName": "Body", "purpose": "Deskripsi kue, informasi form, dan isi tabel." },
-      "label": { "displayName": "Label", "purpose": "Label form, badge status, dan metadata slot jadwal." }
-    },
-    "shadows": [
-      { "name": "control-subtle", "value": "0 1px 2px 0 rgba(37, 19, 6, 0.06)", "purpose": "Kedalaman minimal pada tombol dan input agar terasa tactile." },
-      { "name": "card-ambient", "value": "0 1px 3px 0 rgba(37, 19, 6, 0.08), 0 1px 2px -1px rgba(37, 19, 6, 0.04)", "purpose": "Bayangan ringan pada kartu konten dan panel." },
-      { "name": "focus-ring", "value": "0 0 0 3px rgba(114, 98, 81, 0.35)", "purpose": "Cincin fokus aksesibel saat navigasi keyboard." }
+    "components": [
+        {
+            "name": "Primary Button",
+            "kind": "button",
+            "refersTo": "button-primary",
+            "description": "Tombol aksi utama untuk konfirmasi pesanan dan submit form.",
+            "html": "<button class=\"ds-btn-primary\">Konfirmasi Pesanan</button>",
+            "css": ".ds-btn-primary { font-family: var(--font-sans); font-size: 0.875rem; font-weight: 500; height: 36px; padding: 8px 16px; border-radius: 8px; border: 1px solid transparent; background: var(--primary); color: var(--primary-foreground); box-shadow: 0 1px 2px 0 rgba(37, 19, 6, 0.06); cursor: pointer; transition: opacity 0.15s ease, box-shadow 0.15s ease; } .ds-btn-primary:hover { opacity: 0.9; } .ds-btn-primary:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(114, 98, 81, 0.35); } .ds-btn-primary:active { transform: translateY(1px); }"
+        },
+        {
+            "name": "Secondary Button",
+            "kind": "button",
+            "refersTo": "button-secondary",
+            "description": "Tombol aksi pendukung seperti tombol Kembali pada Stepper.",
+            "html": "<button class=\"ds-btn-secondary\">Kembali</button>",
+            "css": ".ds-btn-secondary { font-family: var(--font-sans); font-size: 0.875rem; font-weight: 500; height: 36px; padding: 8px 16px; border-radius: 8px; border: 1px solid transparent; background: var(--secondary); color: var(--secondary-foreground); box-shadow: 0 1px 2px 0 rgba(37, 19, 6, 0.06); cursor: pointer; transition: opacity 0.15s ease, box-shadow 0.15s ease; } .ds-btn-secondary:hover { opacity: 0.85; } .ds-btn-secondary:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(114, 98, 81, 0.35); }"
+        },
+        {
+            "name": "Outline Button",
+            "kind": "button",
+            "refersTo": "button-outline",
+            "description": "Tombol sekunder berbingkai untuk CTA alternatif atau filter katalog.",
+            "html": "<button class=\"ds-btn-outline\">Pesan Kue Custom</button>",
+            "css": ".ds-btn-outline { font-family: var(--font-sans); font-size: 0.875rem; font-weight: 500; height: 36px; padding: 8px 16px; border-radius: 8px; border: 1px solid var(--input); background: var(--background); color: var(--foreground); box-shadow: 0 1px 2px 0 rgba(37, 19, 6, 0.06); cursor: pointer; transition: background 0.15s ease, color 0.15s ease; } .ds-btn-outline:hover { background: var(--accent); color: var(--accent-foreground); } .ds-btn-outline:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(114, 98, 81, 0.35); }"
+        },
+        {
+            "name": "Text Input",
+            "kind": "input",
+            "refersTo": "input-field",
+            "description": "Kolom isian standar untuk personalisasi kue, alamat, dan autentikasi.",
+            "html": "<input class=\"ds-input\" type=\"text\" placeholder=\"Tulisan pada kue (cth: Happy Birthday!)\" />",
+            "css": ".ds-input { font-family: var(--font-sans); font-size: 0.875rem; height: 36px; width: 100%; padding: 4px 12px; border-radius: 8px; border: 1px solid var(--input); background: transparent; color: var(--foreground); box-shadow: 0 1px 2px 0 rgba(37, 19, 6, 0.05); outline: none; transition: border-color 0.15s ease, box-shadow 0.15s ease; } .ds-input::placeholder { color: var(--muted-foreground); } .ds-input:focus-visible { border-color: var(--ring); box-shadow: 0 0 0 3px rgba(114, 98, 81, 0.3); }"
+        },
+        {
+            "name": "Catalog & Summary Card",
+            "kind": "card",
+            "refersTo": "card-surface",
+            "description": "Wadah kartu untuk item katalog kue, ringkasan pesanan, dan panel dashboard.",
+            "html": "<div class=\"ds-card\"><h3 class=\"ds-card-title\">Vintage Heart Cake</h3><p class=\"ds-card-desc\">Estimasi pembuatan 2 hari • Mulai Rp150.000</p></div>",
+            "css": ".ds-card { font-family: var(--font-sans); background: var(--card); color: var(--card-foreground); border: 1px solid var(--border); border-radius: 12px; padding: 24px; box-shadow: 0 1px 3px 0 rgba(37, 19, 6, 0.08); } .ds-card-title { margin: 0 0 6px; font-size: 1.125rem; font-weight: 600; line-height: 1.35; } .ds-card-desc { margin: 0; font-size: 0.875rem; color: var(--muted-foreground); }"
+        },
+        {
+            "name": "Status Badge",
+            "kind": "chip",
+            "refersTo": "badge-secondary",
+            "description": "Penanda status ketersediaan kapasitas atau status pesanan.",
+            "html": "<span class=\"ds-badge\">Tersedia</span>",
+            "css": ".ds-badge { font-family: var(--font-sans); display: inline-flex; align-items: center; padding: 2px 8px; border-radius: 8px; font-size: 0.75rem; font-weight: 500; background: var(--secondary); color: var(--secondary-foreground); }"
+        }
     ],
-    "motion": [
-      { "name": "ease-tactile", "value": "cubic-bezier(0.22, 1, 0.36, 1)", "purpose": "Transisi warna, border, dan shadow yang responsif." }
-    ],
-    "breakpoints": [
-      { "name": "sm", "value": "640px" },
-      { "name": "md", "value": "768px" },
-      { "name": "lg", "value": "1024px" },
-      { "name": "xl", "value": "1280px" }
-    ]
-  },
-  "components": [
-    {
-      "name": "Primary Button",
-      "kind": "button",
-      "refersTo": "button-primary",
-      "description": "Tombol aksi utama untuk konfirmasi pesanan dan submit form.",
-      "html": "<button class=\"ds-btn-primary\">Konfirmasi Pesanan</button>",
-      "css": ".ds-btn-primary { font-family: var(--font-sans); font-size: 0.875rem; font-weight: 500; height: 36px; padding: 8px 16px; border-radius: 8px; border: 1px solid transparent; background: var(--primary); color: var(--primary-foreground); box-shadow: 0 1px 2px 0 rgba(37, 19, 6, 0.06); cursor: pointer; transition: opacity 0.15s ease, box-shadow 0.15s ease; } .ds-btn-primary:hover { opacity: 0.9; } .ds-btn-primary:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(114, 98, 81, 0.35); } .ds-btn-primary:active { transform: translateY(1px); }"
-    },
-    {
-      "name": "Secondary Button",
-      "kind": "button",
-      "refersTo": "button-secondary",
-      "description": "Tombol aksi pendukung seperti tombol Kembali pada Stepper.",
-      "html": "<button class=\"ds-btn-secondary\">Kembali</button>",
-      "css": ".ds-btn-secondary { font-family: var(--font-sans); font-size: 0.875rem; font-weight: 500; height: 36px; padding: 8px 16px; border-radius: 8px; border: 1px solid transparent; background: var(--secondary); color: var(--secondary-foreground); box-shadow: 0 1px 2px 0 rgba(37, 19, 6, 0.06); cursor: pointer; transition: opacity 0.15s ease, box-shadow 0.15s ease; } .ds-btn-secondary:hover { opacity: 0.85; } .ds-btn-secondary:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(114, 98, 81, 0.35); }"
-    },
-    {
-      "name": "Outline Button",
-      "kind": "button",
-      "refersTo": "button-outline",
-      "description": "Tombol sekunder berbingkai untuk CTA alternatif atau filter katalog.",
-      "html": "<button class=\"ds-btn-outline\">Pesan Kue Custom</button>",
-      "css": ".ds-btn-outline { font-family: var(--font-sans); font-size: 0.875rem; font-weight: 500; height: 36px; padding: 8px 16px; border-radius: 8px; border: 1px solid var(--input); background: var(--background); color: var(--foreground); box-shadow: 0 1px 2px 0 rgba(37, 19, 6, 0.06); cursor: pointer; transition: background 0.15s ease, color 0.15s ease; } .ds-btn-outline:hover { background: var(--accent); color: var(--accent-foreground); } .ds-btn-outline:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(114, 98, 81, 0.35); }"
-    },
-    {
-      "name": "Text Input",
-      "kind": "input",
-      "refersTo": "input-field",
-      "description": "Kolom isian standar untuk personalisasi kue, alamat, dan autentikasi.",
-      "html": "<input class=\"ds-input\" type=\"text\" placeholder=\"Tulisan pada kue (cth: Happy Birthday!)\" />",
-      "css": ".ds-input { font-family: var(--font-sans); font-size: 0.875rem; height: 36px; width: 100%; padding: 4px 12px; border-radius: 8px; border: 1px solid var(--input); background: transparent; color: var(--foreground); box-shadow: 0 1px 2px 0 rgba(37, 19, 6, 0.05); outline: none; transition: border-color 0.15s ease, box-shadow 0.15s ease; } .ds-input::placeholder { color: var(--muted-foreground); } .ds-input:focus-visible { border-color: var(--ring); box-shadow: 0 0 0 3px rgba(114, 98, 81, 0.3); }"
-    },
-    {
-      "name": "Catalog & Summary Card",
-      "kind": "card",
-      "refersTo": "card-surface",
-      "description": "Wadah kartu untuk item katalog kue, ringkasan pesanan, dan panel dashboard.",
-      "html": "<div class=\"ds-card\"><h3 class=\"ds-card-title\">Vintage Heart Cake</h3><p class=\"ds-card-desc\">Estimasi pembuatan 2 hari • Mulai Rp150.000</p></div>",
-      "css": ".ds-card { font-family: var(--font-sans); background: var(--card); color: var(--card-foreground); border: 1px solid var(--border); border-radius: 12px; padding: 24px; box-shadow: 0 1px 3px 0 rgba(37, 19, 6, 0.08); } .ds-card-title { margin: 0 0 6px; font-size: 1.125rem; font-weight: 600; line-height: 1.35; } .ds-card-desc { margin: 0; font-size: 0.875rem; color: var(--muted-foreground); }"
-    },
-    {
-      "name": "Status Badge",
-      "kind": "chip",
-      "refersTo": "badge-secondary",
-      "description": "Penanda status ketersediaan kapasitas atau status pesanan.",
-      "html": "<span class=\"ds-badge\">Tersedia</span>",
-      "css": ".ds-badge { font-family: var(--font-sans); display: inline-flex; align-items: center; padding: 2px 8px; border-radius: 8px; font-size: 0.75rem; font-weight: 500; background: var(--secondary); color: var(--secondary-foreground); }"
+    "narrative": {
+        "northStar": "The Warm Patisserie Atelier",
+        "overview": "TBloom Cake memadukan kehangatan patisserie artisanal dengan kejelasan aplikasi pemesanan kue modern. Permukaan terang menggunakan nuansa porselen hangat dan blush lembut sebagai kanvas netral agar foto kue tetap menjadi pusat perhatian, sementara aksen espresso dan coffee bean menjaga keterbacaan serta bobot tombol aksi utama.\n\nSetiap komponen dirancang terasa tactile, ramah, dan dapat dipindai dengan cepat—mulai dari penjelajahan katalog hingga pengisian Stepper 3 Tahap serta operasional harian di dashboard Admin dan Owner.",
+        "keyCharacteristics": [
+            "Palet cokelat hangat dan soft blush yang konsisten di mode terang maupun mode gelap.",
+            "Tipografi tunggal **Poppins** di seluruh hierarki teks tanpa campuran font lain.",
+            "Permukaan flat-by-default dengan pemisahan tonal lembut dan bayangan tipis hanya saat interaksi.",
+            "Kontrol interaktif terasa tactile dengan sudut membulat lembut (8px–12px) dan focus ring yang tegas."
+        ],
+        "rules": [
+            {
+                "name": "The Canvas Restraint Rule",
+                "body": "Aksen Deep Espresso hanya digunakan pada maksimal satu aksi utama per grup tampilan; foto produk kue dan kejelasan informasi harga tidak boleh bersaing dengan warna latar yang ramai.",
+                "section": "colors"
+            },
+            {
+                "name": "The Warm Neutral Rule",
+                "body": "Jangan gunakan abu-abu dingin murni (`#6b7280` atau `#f3f4f6`) untuk teks sekunder atau pemisah; seluruh netral wajib bertemperatur cokelat-krem (`stone-brown`, `warm-border`, `muted-cream`).",
+                "section": "colors"
+            },
+            {
+                "name": "The Poppins-Only Rule",
+                "body": "Seluruh teks UI—baik judul, paragraf, tombol, maupun label angka—wajib menggunakan keluarga font **Poppins** saja; dilarang menambahkan font eksternal lain.",
+                "section": "typography"
+            },
+            {
+                "name": "The Flat-By-Default Rule",
+                "body": "Permukaan tidak boleh menggunakan bayangan berat atau efek kaca buram dekoratif; kedalaman dibangun lewat perbedaan warna permukaan hangat dan border `1px`.",
+                "section": "elevation"
+            }
+        ],
+        "dos": [
+            "**Do** gunakan **Poppins** sebagai satu-satunya font pada seluruh elemen teks, heading, dan angka harga.",
+            "**Do** jaga kontras teks minimal `4.5:1` (`coffee-bean` di atas `warm-porcelain`/`soft-blush`, atau `soft-blush` di atas `coffee-bean`/`espresso`).",
+            "**Do** pertahankan sudut membulat `8px` untuk tombol/input dan `12px` untuk kartu agar konsisten dan tactile.",
+            "**Do** gunakan bahasa Indonesia yang jelas dan singkat pada label tombol aksi serta pesan error validasi."
+        ],
+        "donts": [
+            "**Don't** menambahkan font lain (seperti Instrument Sans, Inter, atau font dekoratif script) selain **Poppins**.",
+            "**Don't** menggunakan warna abu-abu dingin netral (`gray-*` / `slate-*`) atau gradasi teks dekoratif pada heading.",
+            "**Don't** menumpuk kartu bersarang (*nested cards*) atau memakai bayangan keras (*hard offset shadow*)."
+        ]
     }
-  ],
-  "narrative": {
-    "northStar": "The Warm Patisserie Atelier",
-    "overview": "TBloom Cake memadukan kehangatan patisserie artisanal dengan kejelasan aplikasi pemesanan kue modern. Permukaan terang menggunakan nuansa porselen hangat dan blush lembut sebagai kanvas netral agar foto kue tetap menjadi pusat perhatian, sementara aksen espresso dan coffee bean menjaga keterbacaan serta bobot tombol aksi utama.\n\nSetiap komponen dirancang terasa tactile, ramah, dan dapat dipindai dengan cepat—mulai dari penjelajahan katalog hingga pengisian Stepper 3 Tahap serta operasional harian di dashboard Admin dan Owner.",
-    "keyCharacteristics": [
-      "Palet cokelat hangat dan soft blush yang konsisten di mode terang maupun mode gelap.",
-      "Tipografi tunggal **Poppins** di seluruh hierarki teks tanpa campuran font lain.",
-      "Permukaan flat-by-default dengan pemisahan tonal lembut dan bayangan tipis hanya saat interaksi.",
-      "Kontrol interaktif terasa tactile dengan sudut membulat lembut (8px–12px) dan focus ring yang tegas."
-    ],
-    "rules": [
-      { "name": "The Canvas Restraint Rule", "body": "Aksen Deep Espresso hanya digunakan pada maksimal satu aksi utama per grup tampilan; foto produk kue dan kejelasan informasi harga tidak boleh bersaing dengan warna latar yang ramai.", "section": "colors" },
-      { "name": "The Warm Neutral Rule", "body": "Jangan gunakan abu-abu dingin murni (`#6b7280` atau `#f3f4f6`) untuk teks sekunder atau pemisah; seluruh netral wajib bertemperatur cokelat-krem (`stone-brown`, `warm-border`, `muted-cream`).", "section": "colors" },
-      { "name": "The Poppins-Only Rule", "body": "Seluruh teks UI—baik judul, paragraf, tombol, maupun label angka—wajib menggunakan keluarga font **Poppins** saja; dilarang menambahkan font eksternal lain.", "section": "typography" },
-      { "name": "The Flat-By-Default Rule", "body": "Permukaan tidak boleh menggunakan bayangan berat atau efek kaca buram dekoratif; kedalaman dibangun lewat perbedaan warna permukaan hangat dan border `1px`.", "section": "elevation" }
-    ],
-    "dos": [
-      "**Do** gunakan **Poppins** sebagai satu-satunya font pada seluruh elemen teks, heading, dan angka harga.",
-      "**Do** jaga kontras teks minimal `4.5:1` (`coffee-bean` di atas `warm-porcelain`/`soft-blush`, atau `soft-blush` di atas `coffee-bean`/`espresso`).",
-      "**Do** pertahankan sudut membulat `8px` untuk tombol/input dan `12px` untuk kartu agar konsisten dan tactile.",
-      "**Do** gunakan bahasa Indonesia yang jelas dan singkat pada label tombol aksi serta pesan error validasi."
-    ],
-    "donts": [
-      "**Don't** menambahkan font lain (seperti Instrument Sans, Inter, atau font dekoratif script) selain **Poppins**.",
-      "**Don't** menggunakan warna abu-abu dingin netral (`gray-*` / `slate-*`) atau gradasi teks dekoratif pada heading.",
-      "**Don't** menumpuk kartu bersarang (*nested cards*) atau memakai bayangan keras (*hard offset shadow*)."
-    ]
-  }
 }
