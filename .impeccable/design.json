@@ -1,6 +1,6 @@
 {
     "schemaVersion": 2,
-    "generatedAt": "2026-11-17T22:36:30+07:00",
+    "generatedAt": "2026-11-18T00:39:03+07:00",
     "title": "Design System: TBloom Cake",
     "extensions": {
         "colorMeta": {
@@ -17,6 +17,21 @@
                     "#ab6e6e",
                     "#cfa1a1",
                     "#f0dada"
+                ]
+            },
+            "khaki-beige": {
+                "role": "secondary",
+                "displayName": "Khaki Beige",
+                "canonical": "#c3b59c",
+                "tonalRamp": [
+                    "#332e25",
+                    "#4c4538",
+                    "#69604f",
+                    "#877c67",
+                    "#a59881",
+                    "#c3b59c",
+                    "#ddd3c1",
+                    "#f4efe6"
                 ]
             },
             "soft-blush": {
@@ -64,6 +79,21 @@
                     "#e3cfc1"
                 ]
             },
+            "warm-porcelain": {
+                "role": "neutral",
+                "displayName": "Warm Porcelain",
+                "canonical": "#fdf9f8",
+                "tonalRamp": [
+                    "#382d2b",
+                    "#544542",
+                    "#74605c",
+                    "#967f7b",
+                    "#b8a29e",
+                    "#d8c7c4",
+                    "#f0e6e4",
+                    "#fdf9f8"
+                ]
+            },
             "stone-brown": {
                 "role": "neutral",
                 "displayName": "Stone Brown",
@@ -79,34 +109,19 @@
                     "#ebe5df"
                 ]
             },
-            "khaki-beige": {
-                "role": "secondary",
-                "displayName": "Khaki Beige",
-                "canonical": "#c3b59c",
-                "tonalRamp": [
-                    "#332e25",
-                    "#4c4538",
-                    "#69604f",
-                    "#877c67",
-                    "#a59881",
-                    "#c3b59c",
-                    "#ddd3c1",
-                    "#f4efe6"
-                ]
-            },
-            "warm-porcelain": {
+            "deep-crimson": {
                 "role": "neutral",
-                "displayName": "Warm Porcelain",
-                "canonical": "#fdf9f8",
+                "displayName": "Alert Crimson",
+                "canonical": "#8a1810",
                 "tonalRamp": [
-                    "#382d2b",
-                    "#544542",
-                    "#74605c",
-                    "#967f7b",
-                    "#b8a29e",
-                    "#d8c7c4",
-                    "#f0e6e4",
-                    "#fdf9f8"
+                    "#2b0603",
+                    "#470b06",
+                    "#67110b",
+                    "#8a1810",
+                    "#ad2c22",
+                    "#cc5147",
+                    "#e5877f",
+                    "#f9d5d2"
                 ]
             }
         },
@@ -145,7 +160,7 @@
             },
             {
                 "name": "focus-ring",
-                "value": "0 0 0 3px rgba(114, 98, 81, 0.35)",
+                "value": "0 0 0 3px rgba(68, 40, 24, 0.35)",
                 "purpose": "Cincin fokus aksesibel saat navigasi keyboard."
             }
         ],
@@ -170,7 +185,7 @@
             "refersTo": "button-primary",
             "description": "Tombol aksi utama untuk konfirmasi pesanan dan submit form.",
             "html": "<button class=\"ds-btn-primary\">Konfirmasi Pesanan</button>",
-            "css": ".ds-btn-primary { font-family: var(--font-sans); font-size: 0.875rem; font-weight: 500; height: 36px; padding: 8px 16px; border-radius: 8px; border: 1px solid transparent; background: var(--primary); color: var(--primary-foreground); box-shadow: 0 1px 2px 0 rgba(37, 19, 6, 0.06); cursor: pointer; transition: opacity 0.15s ease, box-shadow 0.15s ease; } .ds-btn-primary:hover { opacity: 0.9; } .ds-btn-primary:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(114, 98, 81, 0.35); } .ds-btn-primary:active { transform: translateY(1px); }"
+            "css": ".ds-btn-primary { font-family: var(--font-sans); font-size: 0.875rem; font-weight: 500; height: 36px; padding: 8px 16px; border-radius: 8px; border: 1px solid transparent; background: var(--primary); color: var(--primary-foreground); box-shadow: 0 1px 2px 0 rgba(37, 19, 6, 0.06); cursor: pointer; transition: opacity 0.15s ease, box-shadow 0.15s ease; } .ds-btn-primary:hover { opacity: 0.9; } .ds-btn-primary:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(68, 40, 24, 0.35); } .ds-btn-primary:active { transform: translateY(1px); }"
         },
         {
             "name": "Secondary Button",
@@ -178,7 +193,7 @@
             "refersTo": "button-secondary",
             "description": "Tombol aksi pendukung seperti tombol Kembali pada Stepper.",
             "html": "<button class=\"ds-btn-secondary\">Kembali</button>",
-            "css": ".ds-btn-secondary { font-family: var(--font-sans); font-size: 0.875rem; font-weight: 500; height: 36px; padding: 8px 16px; border-radius: 8px; border: 1px solid transparent; background: var(--secondary); color: var(--secondary-foreground); box-shadow: 0 1px 2px 0 rgba(37, 19, 6, 0.06); cursor: pointer; transition: opacity 0.15s ease, box-shadow 0.15s ease; } .ds-btn-secondary:hover { opacity: 0.85; } .ds-btn-secondary:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(114, 98, 81, 0.35); }"
+            "css": ".ds-btn-secondary { font-family: var(--font-sans); font-size: 0.875rem; font-weight: 500; height: 36px; padding: 8px 16px; border-radius: 8px; border: 1px solid transparent; background: var(--secondary); color: var(--secondary-foreground); box-shadow: 0 1px 2px 0 rgba(37, 19, 6, 0.06); cursor: pointer; transition: opacity 0.15s ease, box-shadow 0.15s ease; } .ds-btn-secondary:hover { opacity: 0.85; } .ds-btn-secondary:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(68, 40, 24, 0.35); }"
         },
         {
             "name": "Outline Button",
@@ -186,7 +201,7 @@
             "refersTo": "button-outline",
             "description": "Tombol sekunder berbingkai untuk CTA alternatif atau filter katalog.",
             "html": "<button class=\"ds-btn-outline\">Pesan Kue Custom</button>",
-            "css": ".ds-btn-outline { font-family: var(--font-sans); font-size: 0.875rem; font-weight: 500; height: 36px; padding: 8px 16px; border-radius: 8px; border: 1px solid var(--input); background: var(--background); color: var(--foreground); box-shadow: 0 1px 2px 0 rgba(37, 19, 6, 0.06); cursor: pointer; transition: background 0.15s ease, color 0.15s ease; } .ds-btn-outline:hover { background: var(--accent); color: var(--accent-foreground); } .ds-btn-outline:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(114, 98, 81, 0.35); }"
+            "css": ".ds-btn-outline { font-family: var(--font-sans); font-size: 0.875rem; font-weight: 500; height: 36px; padding: 8px 16px; border-radius: 8px; border: 1px solid var(--input); background: var(--card); color: var(--foreground); box-shadow: 0 1px 2px 0 rgba(37, 19, 6, 0.06); cursor: pointer; transition: background 0.15s ease, color 0.15s ease; } .ds-btn-outline:hover { background: var(--accent); color: var(--accent-foreground); } .ds-btn-outline:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(68, 40, 24, 0.35); }"
         },
         {
             "name": "Text Input",
@@ -194,7 +209,7 @@
             "refersTo": "input-field",
             "description": "Kolom isian standar untuk personalisasi kue, alamat, dan autentikasi.",
             "html": "<input class=\"ds-input\" type=\"text\" placeholder=\"Tulisan pada kue (cth: Happy Birthday!)\" />",
-            "css": ".ds-input { font-family: var(--font-sans); font-size: 0.875rem; height: 36px; width: 100%; padding: 4px 12px; border-radius: 8px; border: 1px solid var(--input); background: transparent; color: var(--foreground); box-shadow: 0 1px 2px 0 rgba(37, 19, 6, 0.05); outline: none; transition: border-color 0.15s ease, box-shadow 0.15s ease; } .ds-input::placeholder { color: var(--muted-foreground); } .ds-input:focus-visible { border-color: var(--ring); box-shadow: 0 0 0 3px rgba(114, 98, 81, 0.3); }"
+            "css": ".ds-input { font-family: var(--font-sans); font-size: 0.875rem; height: 36px; width: 100%; padding: 4px 12px; border-radius: 8px; border: 1px solid var(--input); background: transparent; color: var(--foreground); box-shadow: 0 1px 2px 0 rgba(37, 19, 6, 0.05); outline: none; transition: border-color 0.15s ease, box-shadow 0.15s ease; } .ds-input::placeholder { color: var(--muted-foreground); } .ds-input:focus-visible { border-color: var(--ring); box-shadow: 0 0 0 3px rgba(68, 40, 24, 0.3); }"
         },
         {
             "name": "Catalog & Summary Card",
@@ -215,12 +230,12 @@
     ],
     "narrative": {
         "northStar": "The Warm Patisserie Atelier",
-        "overview": "TBloom Cake memadukan kehangatan patisserie artisanal dengan kejelasan aplikasi pemesanan kue modern. Permukaan terang menggunakan nuansa porselen hangat dan blush lembut sebagai kanvas netral agar foto kue tetap menjadi pusat perhatian, sementara aksen espresso dan coffee bean menjaga keterbacaan serta bobot tombol aksi utama.\n\nSetiap komponen dirancang terasa tactile, ramah, dan dapat dipindai dengan cepat—mulai dari penjelajahan katalog hingga pengisian Stepper 3 Tahap serta operasional harian di dashboard Admin dan Owner.",
+        "overview": "TBloom Cake memadukan kehangatan patisserie artisanal dengan kejelasan aplikasi pemesanan kue modern. Pada mode terang, kanvas utama menggunakan **Khaki Beige** (`#c3b59c`) yang selaras dengan identitas visual logo TBloom Cake, sementara kartu konten dan popover menggunakan **Warm Porcelain** (`#fdf9f8`) agar terangkat bersih di atas kanvas dan foto kue tetap menjadi pusat perhatian.\n\nSetiap komponen dirancang terasa tactile, ramah, dan dapat dipindai dengan cepat—mulai dari penjelajahan katalog hingga pengisian Stepper 3 Tahap serta operasional harian di dashboard Admin dan Owner.",
         "keyCharacteristics": [
-            "Palet cokelat hangat dan soft blush yang konsisten di mode terang maupun mode gelap.",
+            "Kanvas mode terang **Khaki Beige** (`#c3b59c`) dengan kartu **Warm Porcelain** (`#fdf9f8`), serta mode gelap **Coffee Bean** (`#251306`) dengan kartu `#311b0d`.",
             "Tipografi tunggal **Poppins** di seluruh hierarki teks tanpa campuran font lain.",
-            "Permukaan flat-by-default dengan pemisahan tonal lembut dan bayangan tipis hanya saat interaksi.",
-            "Kontrol interaktif terasa tactile dengan sudut membulat lembut (8px–12px) dan focus ring yang tegas."
+            "Wordmark logo `tbloom CAKE` (`public/favicon.PNG`) tampil mandiri tanpa teks tambahan di sampingnya, berwarna `#26170f` di mode terang dan di-invert putih (`dark:brightness-0 dark:invert`) di mode gelap.",
+            "Permukaan flat-by-default dengan pemisahan tonal hangat dan batas `1px` yang lolos kontras WCAG AA."
         ],
         "rules": [
             {
@@ -230,7 +245,7 @@
             },
             {
                 "name": "The Warm Neutral Rule",
-                "body": "Jangan gunakan abu-abu dingin murni (`#6b7280` atau `#f3f4f6`) untuk teks sekunder atau pemisah; seluruh netral wajib bertemperatur cokelat-krem (`stone-brown`, `warm-border`, `muted-cream`).",
+                "body": "Jangan gunakan abu-abu dingin murni (`#6b7280` atau `#f3f4f6`) atau kelas warna generik (`red-*`, `gray-*`) untuk teks sekunder, peringatan, atau pemisah; gunakan token semantik bertemperatur cokelat-krem (`--muted-foreground`, `--border`, `--destructive`).",
                 "section": "colors"
             },
             {
@@ -246,13 +261,15 @@
         ],
         "dos": [
             "**Do** gunakan **Poppins** sebagai satu-satunya font pada seluruh elemen teks, heading, dan angka harga.",
-            "**Do** jaga kontras teks minimal `4.5:1` (`coffee-bean` di atas `warm-porcelain`/`soft-blush`, atau `soft-blush` di atas `coffee-bean`/`espresso`).",
+            "**Do** jaga kontras teks minimal `4.5:1` (`coffee-bean` atau `dark-coffee` di atas `khaki-beige`/`warm-porcelain`/`soft-blush`, dan `soft-blush` di atas `coffee-bean`/`espresso`).",
+            "**Do** tampilkan wordmark `tbloom CAKE` (`AppLogoIcon`) dengan rasio aspek asli (`w-auto`) dan tanpa teks duplikat di sampingnya.",
             "**Do** pertahankan sudut membulat `8px` untuk tombol/input dan `12px` untuk kartu agar konsisten dan tactile.",
             "**Do** gunakan bahasa Indonesia yang jelas dan singkat pada label tombol aksi serta pesan error validasi."
         ],
         "donts": [
             "**Don't** menambahkan font lain (seperti Instrument Sans, Inter, atau font dekoratif script) selain **Poppins**.",
-            "**Don't** menggunakan warna abu-abu dingin netral (`gray-*` / `slate-*`) atau gradasi teks dekoratif pada heading.",
+            "**Don't** menggunakan warna abu-abu dingin netral (`gray-*` / `slate-*`), kelas warna generik (`red-*`), atau gradasi teks dekoratif pada heading.",
+            "**Don't** memaksa logo wordmark horizontal ke dalam kotak `1:1` (`size-9` / `size-8`) atau menambahkan teks `tbloom` di sampingnya.",
             "**Don't** menumpuk kartu bersarang (*nested cards*) atau memakai bayangan keras (*hard offset shadow*)."
         ]
     }

@@ -41,12 +41,14 @@ Bukan aplikasi _visual cake builder_ bebas dari nol. Seluruh desain dasar kue di
 ## Brand Commitments
 
 - **Nama Brand:** TBloom Cake (`tbloom`)
+- **Logo Brand:** Wordmark `tbloom CAKE` (`public/favicon.PNG`, warna `#26170f` untuk Light Mode di atas latar `#c3b59c` dan di-invert putih untuk Dark Mode).
 - **Tipografi Mengikat:** Hanya menggunakan font **Poppins** (`resources/fonts/Poppins/*`, weights 100–900 normal & italic), tanpa font lain.
 - **Palet Warna Mengikat (`resources/css/palette.scss`):** Coffee Bean (`#251306`), Espresso (`#512323`), Dark Coffee (`#442818`), Stone Brown (`#726251`), Khaki Beige (`#c3b59c`), dan Soft Blush (`#f7e3df`).
 
 ## Evidence on Hand
 
 - Dokumentasi bisnis, aturan, skema database, alur pengguna, dan arsitektur lengkap di `docs/` (`docs/PRD.md`, `docs/BUSINESS_RULES.md`, `docs/DATABASE_SCHEMA.md`, dll.).
+- Aset logo resmi `public/favicon.PNG` (wordmark horizontal `tbloom CAKE`).
 - Aset font lokal `resources/fonts/Poppins/` (18 file `.ttf` + `OFL.txt`) dan palet warna `resources/css/palette.scss` yang sudah terkonfigurasi di `resources/css/app.css`.
 - Foto produk katalog nyata dan konten copy landing page/katalog belum tersedia di repository (tidak boleh mengarang foto atau testimoni fiktif saat membangun UI nanti).
 
