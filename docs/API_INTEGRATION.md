@@ -1,0 +1,101 @@
+# Integrasi API & Kontrak Endpoint (API Integration) — TBloom Cake
+
+Dokumen ini memisahkan secara tegas antara:
+1. **Bagian A — Endpoint Aktual yang Sudah Terdaftar di Repository (`[FACT - Implemented]`)**: Terbukti dari `routes/web.php`, `routes/settings.php`, `config/fortify.php`, dan `php artisan route:list`.
+2. **Bagian B — Rancangan Kontrak Endpoint & Integrasi Pihak Ketiga (`[CONFIRMED / PROPOSED - Planned]`)**: Rancangan route untuk fitur Katalog, Stepper Pemesanan 3 Tahap, Midtrans, Fonnte OTP, Dashboard Admin, dan Dashboard Owner.
+
+> **Aturan untuk AI Agent:** Jangan memanggil route pada **Bagian B** dari frontend sebelum route dan controller-nya dibuat di backend dan di-generate oleh **Laravel Wayfinder** (`@/routes/*` atau `@/actions/*`).
+
+---
+
+## BAGIAN A: Endpoint Aktual di Repository (`[FACT - Implemented]`)
+
+### A.1 Karakteristik Komunikasi Aktual
+- **Protokol:** Inertia.js v3 di atas middleware grup `web` (Cookie Session + CSRF `X-XSRF-TOKEN`).
+- **Tanpa `routes/api.php` & Tanpa Axios:** Seluruh navigasi dan form menggunakan `<Link>`, `<Form>`, `router`, dan `useHttp()` dari `@inertiajs/react` yang dipadukan dengan fungsi **Laravel Wayfinder**.
+- **Shared Props (`HandleInertiaRequests.php`):** `name` (`string`), `auth.user` (`User | null`), `sidebarOpen` (`boolean`), serta flash `toast` (`{ type, message }`).
+
+### A.2 Tabel Endpoint Aplikasi & Pengaturan (`routes/web.php` & `routes/settings.php`)
+
+| Method | URI | Nama Route | Controller / Action | Middleware | Halaman Inertia / Respons | Status |
+|---|---|---|---|---|---|---|
+| `GET` | `/` | `home` | `Inertia\Controller` | `web` | Render `welcome` | **Implemented** |
+| `GET` | `/up` | — | `HealthCheck` | — | HTTP 200 Health Check | **Implemented** |
+| `GET` | `/dashboard` | `dashboard` | `Inertia\Controller` | `web`, `auth`, `verified` | Render `dashboard` | **Implemented** |
+| `ANY` | `/settings` | — | `RedirectController` | `web`, `auth` | `302 Redirect` ke `/settings/profile` | **Implemented** |
+| `GET` | `/settings/profile` | `profile.edit` | `ProfileController@edit` | `web`, `auth` | Render `settings/profile` | **Implemented** |
+| `PATCH` | `/settings/profile` | `profile.update` | `ProfileController@update` | `web`, `auth` | Redirect `profile.edit` + toast | **Implemented** |
+| `DELETE` | `/settings/profile` | `profile.destroy` | `ProfileController@destroy` | `web`, `auth`, `verified` | Hapus user + Redirect `/` | **Implemented** |
+| `GET` | `/settings/security` | `security.edit` | `SecurityController@edit` | `web`, `auth`, `verified`, `RequirePassword` | Render `settings/security` | **Implemented** |
+| `PUT` | `/settings/password` | `user-password.update` | `SecurityController@update` | `web`, `auth`, `verified`, `throttle:6,1` | Redirect `back()` + toast | **Implemented** |
+| `GET` | `/settings/appearance` | `appearance.edit` | `Inertia\Controller` | `web`, `auth`, `verified` | Render `settings/appearance` | **Implemented** |
+| `GET` | `/.well-known/passkey-endpoints` | `well-known.passkeys` | `Closure` | `web` | JSON `{ enroll, manage }` | **Implemented** |
+
+### A.3 Tabel Endpoint Autentikasi, 2FA, & Passkeys (`Fortify` & `laravel/chisel`)
+
+| Kelompok | Daftar Route Aktual (`php artisan route:list`) | Status |
+|---|---|---|
+| **Login & Logout** | `GET /login` (`login`), `POST /login` (`login.store`, `throttle:login`), `POST /logout` (`logout`) | **Implemented** |
+| **Registrasi** | `GET /register` (`register`), `POST /register` (`register.store`) | **Implemented** |
+| **Reset Password** | `GET /forgot-password` (`password.request`), `POST /forgot-password` (`password.email`), `GET /reset-password/{token}` (`password.reset`), `POST /reset-password` (`password.update`) | **Implemented** |
+| **Verifikasi Email** | `GET /email/verify` (`verification.notice`), `GET /email/verify/{id}/{hash}` (`verification.verify`, `signed`, `throttle:6,1`), `POST /email/verification-notification` (`verification.send`, `throttle:6,1`) | **Implemented** |
+| **Konfirmasi Password** | `GET /user/confirm-password` (`password.confirm`), `POST /user/confirm-password` (`password.confirm.store`), `GET /user/confirmed-password-status` (`password.confirmation`) | **Implemented** |
+| **Two-Factor Auth (2FA)** | `GET /two-factor-challenge` (`two-factor.login`), `POST /two-factor-challenge` (`two-factor.login.store`, `throttle:two-factor`), `POST /user/two-factor-authentication` (`two-factor.enable`), `POST /user/confirmed-two-factor-authentication` (`two-factor.confirm`), `DELETE /user/two-factor-authentication` (`two-factor.disable`), `GET /user/two-factor-qr-code` (`two-factor.qr-code`), `GET /user/two-factor-secret-key` (`two-factor.secret-key`), `GET /user/two-factor-recovery-codes` (`two-factor.recovery-codes`), `POST /user/two-factor-recovery-codes` (`two-factor.regenerate-recovery-codes`) | **Implemented** |
+| **Passkeys (WebAuthn)** | `GET /passkeys/login/options` (`passkey.login-options`), `POST /passkeys/login` (`passkey.login`), `GET /passkeys/confirm/options` (`passkey.confirm-options`), `POST /passkeys/confirm` (`passkey.confirm`), `GET /user/passkeys/options` (`passkey.registration-options`), `POST /user/passkeys` (`passkey.store`), `DELETE /user/passkeys/{passkey}` (`passkey.destroy`) | **Implemented** |
+
+---
+
+## BAGIAN B: Rancangan Endpoint Bisnis TBloom Cake (`[PROPOSED / CONFIRMED - Planned]`)
+
+Endpoint di bawah ini adalah rancangan kontrak untuk mengimplementasikan fitur bisnis **TBloom Cake** (belum ada di `routes/web.php` saat ini):
+
+### B.1 Endpoint Verifikasi OTP WhatsApp (Customer)
+| Method | URI | Middleware | Request Body | Fungsi |
+|---|---|---|---|---|
+| `GET` | `/verify-whatsapp` | `web`, `auth` | — | Menampilkan halaman input OTP WhatsApp. |
+| `POST` | `/verify-whatsapp/send` | `web`, `auth`, `throttle:3,1` | — | Mengirim ulang kode OTP ke nomor WhatsApp user melalui **Fonnte API**. |
+| `POST` | `/verify-whatsapp/confirm` | `web`, `auth`, `throttle:5,1` | `{ code: string }` | Memvalidasi kode OTP dan mengisi `phone_verified_at`. |
+
+### B.2 Endpoint Katalog & Pemesanan Kue (Public & Customer)
+| Method | URI | Middleware | Request Body / Params | Respons / Fungsi |
+|---|---|---|---|---|
+| `GET` | `/cakes` | `web` | `?category=<slug>` | Menampilkan daftar kue katalog aktif (`is_active = true`). |
+| `GET` | `/cakes/{cake}` | `web` | Route model `{cake}` | Menampilkan detail kue, harga dasar, opsi ukuran/flavor/filling, `production_days`, dan `minimum_order_days`. |
+| `GET` | `/cakes/{cake}/order` | `web`, `auth`, `role:customer` | Route model `{cake}` | Menampilkan halaman **Form Pemesanan Stepper 3 Tahap** beserta data user login (`name`, `phone`), daftar opsi kue, slot jam aktif, dan informasi ketersediaan tanggal. |
+| `POST` | `/orders/calculate-preview` | `web`, `auth`, `role:customer` | `{ cake_id, required_date, size_id, flavor_id, filling_id, fulfillment_method, payment_method }` | Memvalidasi tanggal (`minimum_order_days` & sisa kapasitas harian) dan mengembalikan rincian harga resmi dari backend (termasuk fee Midtrans jika memilih Midtrans). |
+| `POST` | `/orders` | `web`, `auth`, `role:customer` | Multipart/FormData seluruh field Stepper Tahap 1–3 (`cake_id`, `required_date`, `size_id`, `flavor_id`, `filling_id`, `cake_message`, `recipient_name`, `recipient_age`, `uploaded_image?`, `special_notes?`, `fulfillment_method`, `delivery_address?`, `delivery_date`, `delivery_time`, `payment_method`) | Menjalankan `DB::transaction` + `lockForUpdate()` pada kapasitas harian, memvalidasi bahwa kombinasi bukan `delivery + cash`, menyimpan pesanan, membuat transaksi Midtrans (jika `midtrans`), dan mengarahkan ke halaman detail pesanan. |
+| `GET` | `/orders` | `web`, `auth`, `role:customer` | — | Menampilkan daftar riwayat pesanan milik Customer. |
+| `GET` | `/orders/{order}` | `web`, `auth`, `role:customer` | Route model `{order}` | Menampilkan detail pesanan, status terkini, rincian pembayaran, dan tombol bayar Midtrans / upload bukti bayar. |
+
+### B.3 Endpoint Dashboard Admin (`role:admin`)
+| Method | URI | Middleware | Fungsi |
+|---|---|---|---|
+| `GET` | `/admin/dashboard` | `web`, `auth`, `role:admin` | Ringkasan pesanan harian & sisa kapasitas produksi. |
+| `RESOURCE` | `/admin/categories` | `web`, `auth`, `role:admin` | CRUD Kategori Kue. |
+| `RESOURCE` | `/admin/cakes` | `web`, `auth`, `role:admin` | CRUD Produk Kue beserta konfigurasi opsi (`cake_sizes`, `cake_flavors`, `cake_fillings`), `allow_image_upload`, `production_days`, `minimum_order_days`, `is_active`. |
+| `RESOURCE` | `/admin/sizes`, `/admin/flavors`, `/admin/fillings` | `web`, `auth`, `role:admin` | CRUD Master Ukuran, Flavor, dan Filling. |
+| `GET/PUT` | `/admin/capacities` | `web`, `auth`, `role:admin` | Mengatur kapasitas maksimum harian dan melihat total cake terpakai serta sisa kapasitas per tanggal. |
+| `RESOURCE` | `/admin/time-slots` | `web`, `auth`, `role:admin` | Mengelola daftar slot jam pengiriman/pengambilan. |
+| `GET` | `/admin/orders` & `/admin/orders/{order}` | `web`, `auth`, `role:admin` | Melihat daftar seluruh pesanan pelanggan beserta detail personalisasi, foto, dan bukti bayar. |
+| `PATCH` | `/admin/orders/{order}/status` | `web`, `auth`, `role:admin` | Mengubah status pesanan (`Pending` s/d `Selesai`) dan mencatat ke `order_status_histories`. |
+
+### B.4 Endpoint Dashboard Owner (`role:owner`)
+| Method | URI | Middleware | Fungsi |
+|---|---|---|---|
+| `GET` | `/owner/dashboard` | `web`, `auth`, `role:owner` | Menampilkan statistik total pendapatan, jumlah pengunjung website, dan total akun Customer terdaftar. |
+| `GET` | `/owner/admins` | `web`, `auth`, `role:owner` | Menampilkan daftar seluruh akun Admin beserta statusnya. |
+| `POST` | `/owner/admins` | `web`, `auth`, `role:owner` | Membuat akun Admin baru (`role = 'admin'`). |
+| `PATCH` | `/owner/admins/{user}/status` | `web`, `auth`, `role:owner` | Mengaktifkan / menonaktifkan akun Admin (`is_active`). |
+
+---
+
+## 6. Integrasi Eksternal (`[CONFIRMED - Planned]`)
+
+1. **Fonnte API (WhatsApp OTP):**
+   - Digunakan oleh backend Laravel (`Http::post`) untuk mengirimkan kode OTP verifikasi nomor WhatsApp saat registrasi Customer.
+   - Konfigurasi token disimpan di `.env` (`FONNTE_TOKEN`) dan `config/services.php` (jangan pernah diekspos ke frontend).
+2. **Midtrans Payment Gateway:**
+   - Digunakan untuk memproses pembayaran non-tunai dengan pembebanan biaya layanan (*fee*) kepada Customer.
+   - Webhook notifikasi pembayaran (`POST /webhooks/midtrans`) wajib dikecualikan dari middleware CSRF (`$middleware->validateCsrfTokens(except: ['webhooks/midtrans'])`) namun **wajib memverifikasi `signature_key` SHA-512** dari Midtrans Server Key.
+3. **WhatsApp Direct Link (CTA Custom Cake):**
+   - Tautan eksternal `https://wa.me/<nomor_penjual>?text=...` pada tombol *"Pesan Kue Custom"* di landing page untuk pemesanan kue di luar katalog.
