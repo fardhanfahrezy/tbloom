@@ -12,7 +12,8 @@ use App\Http\Controllers\Owner\OwnerDashboardController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [CatalogController::class, 'index'])->name('home');
+Route::get('/', [CatalogController::class, 'landing'])->name('home');
+Route::get('/katalog', [CatalogController::class, 'index'])->name('catalog.index');
 Route::get('/cakes/{cake:slug}', [CatalogController::class, 'show'])->name('cakes.show');
 
 Route::middleware(['auth'])->group(function () {

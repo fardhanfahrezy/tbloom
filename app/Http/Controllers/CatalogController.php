@@ -12,6 +12,25 @@ use Inertia\Response;
 
 class CatalogController extends Controller
 {
+    public function landing(): Response
+    {
+        DailyVisitStat::recordVisit();
+
+        $featuredCakes = Cake::query()
+            ->with('category:id,name,slug')
+            ->where('is_active', true)
+            ->whereHas('category', fn ($query) => $query->where('is_active', true))
+            ->latest('id')
+            ->limit(4)
+            ->get()
+            ->map(fn (Cake $cake): array => $this->formatCakeCard($cake));
+
+        return Inertia::render('welcome', [
+            'featuredCakes' => $featuredCakes,
+            'whatsappUrl' => WhatsAppUrl::customCakeUrl(),
+        ]);
+    }
+
     public function index(Request $request): Response
     {
         DailyVisitStat::recordVisit();
@@ -39,24 +58,9 @@ class CatalogController extends Controller
             })
             ->latest('id')
             ->get()
-            ->map(fn (Cake $cake): array => [
-                'id' => $cake->id,
-                'name' => $cake->name,
-                'slug' => $cake->slug,
-                'description' => $cake->description,
-                'image_url' => $cake->image_url,
-                'base_price' => $cake->base_price,
-                'production_days' => $cake->production_days,
-                'minimum_order_days' => $cake->minimum_order_days,
-                'allow_image_upload' => $cake->allow_image_upload,
-                'category' => $cake->category ? [
-                    'id' => $cake->category->id,
-                    'name' => $cake->category->name,
-                    'slug' => $cake->category->slug,
-                ] : null,
-            ]);
+            ->map(fn (Cake $cake): array => $this->formatCakeCard($cake));
 
-        return Inertia::render('welcome', [
+        return Inertia::render('katalog/index', [
             'categories' => $categories,
             'cakes' => $cakes,
             'filters' => [
@@ -112,5 +116,28 @@ class CatalogController extends Controller
             ],
             'whatsappUrl' => WhatsAppUrl::customCakeUrl($cake->name),
         ]);
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private function formatCakeCard(Cake $cake): array
+    {
+        return [
+            'id' => $cake->id,
+            'name' => $cake->name,
+            'slug' => $cake->slug,
+            'description' => $cake->description,
+            'image_url' => $cake->image_url,
+            'base_price' => $cake->base_price,
+            'production_days' => $cake->production_days,
+            'minimum_order_days' => $cake->minimum_order_days,
+            'allow_image_upload' => $cake->allow_image_upload,
+            'category' => $cake->category ? [
+                'id' => $cake->category->id,
+                'name' => $cake->category->name,
+                'slug' => $cake->category->slug,
+            ] : null,
+        ];
     }
 }
