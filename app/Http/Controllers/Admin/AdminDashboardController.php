@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\OrderStatus;
 use App\Http\Controllers\Controller;
 use App\Models\Cake;
 use App\Models\Category;
 use App\Models\DailyCapacity;
+use App\Models\Order;
 use App\Models\PickupDeliveryTimeSlot;
 use App\Models\StoreSetting;
 use Inertia\Inertia;
@@ -25,6 +27,14 @@ class AdminDashboardController extends Controller
                 'totalCakes' => Cake::query()->count(),
                 'activeCategories' => Category::query()->where('is_active', true)->count(),
                 'activeTimeSlots' => PickupDeliveryTimeSlot::query()->where('is_active', true)->count(),
+                'pendingOrders' => Order::query()
+                    ->whereIn('order_status', [
+                        OrderStatus::Pending->value,
+                        OrderStatus::AwaitingPayment->value,
+                        OrderStatus::PaymentConfirmed->value,
+                    ])
+                    ->count(),
+                'totalOrders' => Order::query()->count(),
                 'todayMaxCapacity' => $todayCapacity->max_capacity ?? $defaultCapacity,
                 'todayUsedCapacity' => $todayCapacity->used_capacity ?? 0,
                 'todayRemainingCapacity' => $todayCapacity ? $todayCapacity->remainingCapacity() : $defaultCapacity,

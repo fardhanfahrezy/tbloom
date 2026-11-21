@@ -5,16 +5,21 @@ use App\Http\Controllers\Admin\CakeController;
 use App\Http\Controllers\Admin\CakeOptionController;
 use App\Http\Controllers\Admin\CapacityController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\Auth\WhatsAppVerificationController;
 use App\Http\Controllers\CatalogController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\Owner\AdminAccountController;
 use App\Http\Controllers\Owner\OwnerDashboardController;
+use App\Http\Controllers\Webhooks\MidtransWebhookController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [CatalogController::class, 'landing'])->name('home');
 Route::get('/katalog', [CatalogController::class, 'index'])->name('catalog.index');
 Route::get('/cakes/{cake:slug}', [CatalogController::class, 'show'])->name('cakes.show');
+
+Route::post('/webhooks/midtrans', MidtransWebhookController::class)->name('webhooks.midtrans');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('verify-whatsapp', [WhatsAppVerificationController::class, 'notice'])
@@ -44,6 +49,14 @@ Route::middleware(['auth', 'verified', 'phone.verified'])->group(function () {
 
         return redirect()->route('home');
     })->name('dashboard');
+});
+
+Route::middleware(['auth', 'verified', 'phone.verified', 'role:customer'])->group(function () {
+    Route::get('/cakes/{cake:slug}/order', [OrderController::class, 'create'])->name('cakes.order');
+    Route::post('/orders/calculate-preview', [OrderController::class, 'preview'])->name('orders.preview');
+    Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
+    Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
+    Route::get('/orders/{order:order_number}', [OrderController::class, 'show'])->name('orders.show');
 });
 
 Route::middleware(['auth', 'verified', 'role:admin'])
@@ -81,6 +94,11 @@ Route::middleware(['auth', 'verified', 'role:admin'])
         Route::post('time-slots', [CapacityController::class, 'storeSlot'])->name('time-slots.store');
         Route::patch('time-slots/{slot}', [CapacityController::class, 'updateSlot'])->name('time-slots.update');
         Route::delete('time-slots/{slot}', [CapacityController::class, 'destroySlot'])->name('time-slots.destroy');
+
+        Route::get('orders', [AdminOrderController::class, 'index'])->name('orders.index');
+        Route::patch('orders/payment-fee', [AdminOrderController::class, 'updatePaymentFee'])->name('orders.payment-fee');
+        Route::get('orders/{order:order_number}', [AdminOrderController::class, 'show'])->name('orders.show');
+        Route::patch('orders/{order:order_number}/status', [AdminOrderController::class, 'updateStatus'])->name('orders.status');
     });
 
 Route::middleware(['auth', 'verified', 'role:owner'])

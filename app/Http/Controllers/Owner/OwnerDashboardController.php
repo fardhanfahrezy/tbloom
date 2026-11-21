@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers\Owner;
 
+use App\Enums\OrderStatus;
+use App\Enums\PaymentStatus;
 use App\Enums\UserRole;
 use App\Http\Controllers\Controller;
 use App\Models\Cake;
 use App\Models\DailyVisitStat;
+use App\Models\Order;
 use App\Models\User;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -15,6 +18,14 @@ class OwnerDashboardController extends Controller
     public function __invoke(): Response
     {
         $today = now('Asia/Jakarta')->toDateString();
+
+        $totalRevenue = (int) Order::query()
+            ->where(function ($query): void {
+                $query->where('payment_status', PaymentStatus::Paid->value)
+                    ->orWhere('order_status', OrderStatus::Completed->value);
+            })
+            ->selectRaw('COALESCE(SUM(total_price - payment_fee), 0) as revenue')
+            ->value('revenue');
 
         $totalCustomers = User::query()->where('role', UserRole::Customer)->count();
         $totalAdmins = User::query()->where('role', UserRole::Admin)->count();
@@ -39,7 +50,7 @@ class OwnerDashboardController extends Controller
 
         return Inertia::render('owner/dashboard', [
             'stats' => [
-                'totalRevenue' => 0, // Diperbarui dari tabel orders pada Fase 3
+                'totalRevenue' => $totalRevenue,
                 'totalCustomers' => $totalCustomers,
                 'totalAdmins' => $totalAdmins,
                 'activeAdmins' => $activeAdmins,
