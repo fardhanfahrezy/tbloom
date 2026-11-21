@@ -25,6 +25,16 @@ class CatalogSeeder extends Seeder
             ['value' => (string) config('services.whatsapp.admin_number', '6281234567890')],
         );
 
+        StoreSetting::query()->firstOrCreate(
+            ['key' => 'midtrans_fee_type'],
+            ['value' => 'fixed'],
+        );
+
+        StoreSetting::query()->firstOrCreate(
+            ['key' => 'midtrans_fee_value'],
+            ['value' => '4000'],
+        );
+
         $categories = [
             ['name' => 'Korean Bento Cake', 'slug' => 'korean-bento-cake'],
             ['name' => 'Vintage Cake', 'slug' => 'vintage-cake'],
