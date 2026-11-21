@@ -1,32 +1,51 @@
 # Riwayat Perubahan (Changelog) — TBloom Cake
 
-Dokumen ini mencatat riwayat perubahan signifikan pada konfigurasi, kode, dan dokumentasi arsitektur/bisnis proyek **TBloom Cake (`tbloom`)**.
+Dokumen ini mencatat riwayat perubahan signifikan pada konfigurasi, kode, dan dokumentasi proyek **TBloom Cake (`tbloom`)**.
 
 ---
 
-## [Unreleased] — 2026-11-17
+## [Fase 3] — 2026-11-21
 
-### Added (Dokumentasi & Spesifikasi Bisnis TBloom Cake)
+### Added (Form Pemesanan Stepper 3 Tahap, Locking Kapasitas, & Midtrans Snap)
 
-- **Integrasi Konteks Bisnis TBloom Cake (`Catalog-Based Custom Cake Ordering System`):**
-    - Mendokumentasikan konsep pemesanan kue berbasis katalog dengan personalisasi terbatas serta jalur CTA WhatsApp untuk desain kue di luar katalog di `docs/PRD.md` dan `docs/BUSINESS_RULES.md`.
-    - Mendokumentasikan sistem **3 Role Pengguna (RBAC)**: `owner` (dibuat khusus via Artisan CLI, mengelola Admin & melihat statistik pendapatan/pengunjung/total Customer), `admin` (mengelola produk, opsi, kapasitas harian, & pesanan), dan `customer` (registrasi publik dengan verifikasi nomor WhatsApp via **OTP Fonnte API**).
-    - Mendokumentasikan aturan **Form Pemesanan Stepper 3 Tahap** (_1. Detail Pesanan_, _2. Pengiriman/Pengambilan_, _3. Pembayaran & Konfirmasi_).
-    - Mendokumentasikan aturan resmi **Minimum Order Days** (`Selisih hari kalender >= minimum_order_days` dalam zona waktu `Asia/Jakarta`) dan **Kapasitas Produksi Harian** (`Sisa Kapasitas = Kapasitas Maksimum - Total Cake Terpakai`) beserta kewajiban validasi backend menggunakan `DB::transaction` dan `lockForUpdate()`, serta mencatat 5 item `PENDING DECISION` terkait kapasitas.
-    - Mendokumentasikan aturan pembayaran rilis pertama: **Cash** (bayar langsung di toko, khusus _Pickup_, **tidak mendukung COD / `Cash + Delivery` dilarang**) dan **Payment Gateway Midtrans** (biaya _fee_ Midtrans ditanggung oleh Customer).
-    - Membuat 6 dokumen spesifikasi teknis baru di `docs/`:
-        - `docs/FEATURE_MAPPING.md`
-        - `docs/DATA_FLOW.md`
-        - `docs/TESTING_STRATEGY.md`
-        - `docs/ERROR_HANDLING.md`
-        - `docs/PERFORMANCE.md`
-        - `docs/CHANGELOG.md`
-    - Memperbarui `README.md`, `AGENTS.md`, `CLAUDE.md`, `docs/PRD.md`, `docs/BUSINESS_RULES.md`, `docs/DATABASE_SCHEMA.md`, `docs/USER_FLOW.md`, `docs/SYSTEM_ARCHITECTURE.md`, `docs/API_INTEGRATION.md`, `docs/FRONTEND_ARCHITECTURE.md`, `docs/SECURITY.md`, `docs/DEPLOYMENT.md`, dan `docs/DEVELOPMENT_GUIDELINES.md`.
+- **Skema & Model Transaksi (`database/migrations/2026_11_21_000001_create_orders_table.php`):**
+    - Menambahkan tabel `orders`, `payments`, dan `order_status_histories` beserta Enums (`OrderStatus`, `FulfillmentMethod`, `PaymentMethod`, `PaymentStatus`) dan Model Eloquent (`Order`, `Payment`, `OrderStatusHistory`).
+    - Menambahkan default `midtrans_fee_type` (`fixed`) dan `midtrans_fee_value` (`4000`) pada `CatalogSeeder.php`.
+- **Services Kritis & Webhook:**
+    - `App\Services\CapacityService`: Penegakan batas `minimum_order_days` dalam zona waktu `Asia/Jakarta`, reservasi kapasitas harian atomik (`DB::transaction` + `lockForUpdate()`), dan pengembalian kapasitas idempoten via `capacity_released_at`.
+    - `App\Services\OrderPricingService`: Perhitungan total harga resmi di backend (harga dasar + opsi + biaya layanan Midtrans).
+    - `App\Services\MidtransPaymentService` & `App\Http\Controllers\Webhooks\MidtransWebhookController`: Pembuatan transaksi Midtrans Snap, pengecualian CSRF pada `/webhooks/midtrans`, verifikasi `signature_key` SHA-512, konfirmasi status pembayaran, serta pelepasan kapasitas otomatis saat `expire`/`cancel`/`deny`.
+- **UI Pemesanan Customer & Manajemen Pesanan Admin:**
+    - Mengaktifkan tombol **"Pesan Kue Ini"** pada `resources/js/pages/cakes/show.tsx` dan membangun Stepper 3 Tahap di `resources/js/pages/orders/create.tsx` (retensi data saat klik **Kembali**, preview tanggal/kapasitas & harga real-time via `/orders/calculate-preview`, dan penonaktifan **Cash** otomatis saat **Delivery**).
+    - Menambahkan halaman `Pesanan Saya` (`orders/index.tsx`, `orders/show.tsx`) dengan integrasi Midtrans Snap dinamis dan menu navigasi di `PublicHeader`.
+    - Menambahkan manajemen pesanan Admin (`admin/orders/index.tsx`, `admin/orders/show.tsx`) beserta pengaturan biaya layanan Midtrans dan menghubungkan `totalRevenue` nyata pada `OwnerDashboardController`.
+- **Pengujian Pest:** Menambahkan `tests/Feature/OrderCapacityAndDateTest.php` dan `tests/Feature/OrderPricingAndPaymentTest.php` (`73 passed`, `350 assertions`).
 
-### Configured (Sebelumnya pada 2026-11-17)
+---
 
-- **Konfigurasi Database PostgreSQL 18 (`pgsql`):**
-    - Mengubah fallback koneksi default di `config/database.php`, `config/queue.php`, dan `.env.example` dari `sqlite` ke `pgsql` (`tbloom` dan `tbloom_test`).
-    - Menjalankan 5 migrasi awal pada database PostgreSQL `tbloom` (10 tabel) dan memverifikasi seluruh 42 pengujian Pest lulus pada `tbloom_test`.
-- **Inisialisasi Repository Git (`main`):**
-    - Membagi kode fondasi proyek ke dalam 7 commit berdasarkan kategori (`chore`, `config`, `database`, `feat(backend)`, `feat(frontend)`, `test`, `ci`) dan melakukan push ke `https://github.com/fardhanfahrezy/tbloom.git`.
+## [Fase 2 & Penyempurnaan Brand/Design] — 2026-11-18
+
+### Added & Changed (Katalog Kue, Kapasitas Harian, & Identitas Visual _The Warm Patisserie Atelier_)
+
+- **Skema & Operasional Katalog, Kapasitas, & Pengunjung:**
+    - Migrasi & Model untuk `categories`, `cakes`, `sizes`, `flavors`, `fillings` (beserta pivot harga tambahan), `daily_capacities`, `pickup_delivery_time_slots`, dan `daily_visit_stats`, lengkap dengan Factory dan `CatalogSeeder.php`.
+    - Memisahkan Landing Page editorial (`/`, `welcome.tsx`, slogan resmi TBloom Cake & 4 produk unggulan) dan halaman Katalog lengkap (`/katalog`, `katalog/index.tsx`) serta Detail Kue (`/cakes/{slug}`, `cakes/show.tsx`) dengan navigasi atas konsisten (`PublicHeader` / `PublicFooter`).
+    - Membangun Dashboard Admin & CRUD Kategori, Kue (+ upload foto), Master Opsi, Kapasitas Harian (`max_capacity >= used_capacity`), Slot Jam, serta Dashboard Owner (`OwnerDashboardController`, `AdminAccountController`) dan sidebar terpadu berbasis role (`app-sidebar.tsx`).
+- **Identitas Visual & Impeccable Design System:**
+    - Menetapkan kanvas Light Mode ke `#C3B59C` (_Khaki Beige_), kartu ke `#FDF9F8` (_Warm Porcelain_), kontras teks/border WCAG AA, Dark Mode `#251306` (_Coffee Bean_), serta logo wordmark `public/favicon.PNG` (`dark:brightness-0 dark:invert`, tanpa teks duplikat).
+    - Menyelaraskan `PRODUCT.md`, `DESIGN.md`, dan `.impeccable/design.json`.
+
+---
+
+## [Fase 1] — 2026-11-17
+
+### Added (Fondasi RBAC 3 Role, Zona Waktu `Asia/Jakarta`, & OTP WhatsApp Fonnte)
+
+- Mengubah zona waktu aplikasi default menjadi `Asia/Jakarta` dan menambah konfigurasi layanan `fonnte`, `midtrans`, dan `whatsapp` pada `config/services.php`.
+- Menambahkan kolom `role` (`owner` | `admin` | `customer`), `phone`, `phone_verified_at`, dan `is_active` pada tabel `users`, serta tabel `whatsapp_otps` dan `store_settings`.
+- Membangun `EnsureUserHasRole` (`role`), `EnsurePhoneIsVerified` (`phone.verified`), Artisan Command `php artisan app:create-owner`, `FonnteOtpService`, `WhatsAppVerificationController`, dukungan login **Email atau Nomor WhatsApp** di `FortifyServiceProvider`, dan antarmuka autentikasi berbahasa Indonesia.
+
+### Configured (Fondasi Awal pada 2026-11-17)
+
+- Konfigurasi PostgreSQL 18 (`pgsql`) untuk database `tbloom` dan `tbloom_test`.
+- Setup dokumentasi awal di `README.md`, `AGENTS.md`, `CLAUDE.md`, dan `docs/`.
