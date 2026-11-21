@@ -1,10 +1,5 @@
 import { Head, Link } from '@inertiajs/react';
-import {
-    Cake,
-    CalendarClock,
-    FolderTree,
-    SlidersHorizontal,
-} from 'lucide-react';
+import { Cake, CalendarClock, ClipboardList, FolderTree } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import admin from '@/routes/admin';
@@ -15,6 +10,8 @@ type Props = {
         totalCakes: number;
         activeCategories: number;
         activeTimeSlots: number;
+        pendingOrders: number;
+        totalOrders: number;
         todayMaxCapacity: number;
         todayUsedCapacity: number;
         todayRemainingCapacity: number;
@@ -91,14 +88,14 @@ export default function AdminDashboard({ stats }: Props) {
 
                     <div className="rounded-xl border border-border bg-card p-6 shadow-sm">
                         <div className="flex items-center justify-between text-sm text-muted-foreground">
-                            <span>Slot Jam Aktif</span>
-                            <SlidersHorizontal className="size-4 text-primary" />
+                            <span>Pesanan Perlu Diproses</span>
+                            <ClipboardList className="size-4 text-primary" />
                         </div>
                         <p className="mt-3 text-3xl font-bold tabular-nums">
-                            {stats.activeTimeSlots}
+                            {stats.pendingOrders}
                         </p>
                         <p className="mt-1 text-xs text-muted-foreground">
-                            Slot pickup &amp; delivery tersedia
+                            Dari total {stats.totalOrders} pesanan masuk
                         </p>
                     </div>
                 </div>
@@ -133,13 +130,18 @@ export default function AdminDashboard({ stats }: Props) {
 
                     <div className="rounded-xl border border-border bg-card p-6 shadow-sm">
                         <h2 className="text-lg font-semibold">
-                            Kapasitas Produksi &amp; Slot Jam
+                            Pesanan, Kapasitas &amp; Slot Jam
                         </h2>
                         <p className="mt-1 text-sm text-muted-foreground">
-                            Tetapkan batas produksi harian default, tutup
-                            tanggal tertentu, dan kelola slot jam penerimaan.
+                            Proses pesanan masuk, tetapkan batas produksi harian
+                            default, dan kelola slot jam penerimaan.
                         </p>
-                        <div className="mt-4">
+                        <div className="mt-4 flex flex-wrap gap-2">
+                            <Button asChild variant="secondary" size="sm">
+                                <Link href={admin.orders.index()}>
+                                    Kelola Pesanan
+                                </Link>
+                            </Button>
                             <Button asChild variant="secondary" size="sm">
                                 <Link href={admin.capacities.index()}>
                                     Atur Kapasitas &amp; Slot

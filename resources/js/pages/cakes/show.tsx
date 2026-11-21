@@ -1,4 +1,4 @@
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, usePage } from '@inertiajs/react';
 import {
     ArrowLeft,
     CalendarClock,
@@ -12,6 +12,7 @@ import { PublicFooter, PublicHeader } from '@/components/public-layout';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { formatRupiah } from '@/lib/utils';
+import cakesRoutes from '@/routes/cakes';
 import catalog from '@/routes/catalog';
 
 type CakeOptionItem = {
@@ -44,6 +45,8 @@ type Props = {
 };
 
 export default function CakeShow({ cake, whatsappUrl }: Props) {
+    const { auth } = usePage().props;
+    const isStaff = auth.user?.role === 'admin' || auth.user?.role === 'owner';
     const [selectedSizeId, setSelectedSizeId] = useState<number | null>(
         cake.sizes[0]?.id ?? null,
     );
@@ -249,14 +252,52 @@ export default function CakeShow({ cake, whatsappUrl }: Props) {
                             </div>
 
                             <div className="mt-8 space-y-3 border-t border-border pt-6">
-                                <Button
-                                    type="button"
-                                    size="lg"
-                                    className="w-full"
-                                    disabled
-                                >
-                                    Pesan Kue Ini (Stepper Hadir di Fase 3)
-                                </Button>
+                                {isStaff ? (
+                                    <Button
+                                        type="button"
+                                        size="lg"
+                                        className="w-full"
+                                        disabled
+                                    >
+                                        Gunakan Akun Customer untuk Memesan
+                                    </Button>
+                                ) : (
+                                    <Button
+                                        asChild
+                                        size="lg"
+                                        className="w-full"
+                                    >
+                                        <Link
+                                            href={cakesRoutes.order(
+                                                { cake: cake.slug },
+                                                {
+                                                    query: {
+                                                        ...(selectedSizeId
+                                                            ? {
+                                                                  size_id:
+                                                                      selectedSizeId,
+                                                              }
+                                                            : {}),
+                                                        ...(selectedFlavorId
+                                                            ? {
+                                                                  flavor_id:
+                                                                      selectedFlavorId,
+                                                              }
+                                                            : {}),
+                                                        ...(selectedFillingId
+                                                            ? {
+                                                                  filling_id:
+                                                                      selectedFillingId,
+                                                              }
+                                                            : {}),
+                                                    },
+                                                },
+                                            )}
+                                        >
+                                            Pesan Kue Ini
+                                        </Link>
+                                    </Button>
+                                )}
                                 <Button
                                     asChild
                                     variant="secondary"

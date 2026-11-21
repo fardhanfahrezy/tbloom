@@ -4,9 +4,11 @@ import AppLogoIcon from '@/components/app-logo-icon';
 import { Button } from '@/components/ui/button';
 import { dashboard, home, login, register } from '@/routes';
 import catalog from '@/routes/catalog';
+import orders from '@/routes/orders';
 
 export function PublicHeader() {
     const { auth } = usePage().props;
+    const isCustomer = auth.user?.role === 'customer';
 
     return (
         <header className="border-b border-border/80 bg-card/85 backdrop-blur-xs">
@@ -33,6 +35,14 @@ export function PublicHeader() {
                         >
                             Katalog
                         </Link>
+                        {isCustomer && (
+                            <Link
+                                href={orders.index()}
+                                className="text-foreground/80 transition-colors hover:text-primary"
+                            >
+                                Pesanan Saya
+                            </Link>
+                        )}
                     </nav>
                 </div>
 
@@ -43,13 +53,21 @@ export function PublicHeader() {
                     >
                         Katalog
                     </Link>
+                    {isCustomer && (
+                        <Link
+                            href={orders.index()}
+                            className="px-2 py-1 text-sm font-medium text-foreground/80 hover:text-primary sm:hidden"
+                        >
+                            Pesanan
+                        </Link>
+                    )}
 
                     {auth.user ? (
                         <Button asChild size="sm">
-                            <Link href={dashboard()}>
-                                {auth.user.role === 'customer'
-                                    ? 'Beranda Akun'
-                                    : 'Dashboard'}
+                            <Link
+                                href={isCustomer ? orders.index() : dashboard()}
+                            >
+                                {isCustomer ? 'Pesanan Saya' : 'Dashboard'}
                             </Link>
                         </Button>
                     ) : (

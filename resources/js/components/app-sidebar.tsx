@@ -2,6 +2,7 @@ import { Link, usePage } from '@inertiajs/react';
 import {
     Cake,
     CalendarClock,
+    ClipboardList,
     FolderTree,
     LayoutGrid,
     SlidersHorizontal,
@@ -75,6 +76,11 @@ export function AppSidebar() {
                         title: 'Kapasitas & Slot',
                         href: admin.capacities.index(),
                         icon: CalendarClock,
+                    },
+                    {
+                        title: 'Kelola Pesanan',
+                        href: admin.orders.index(),
+                        icon: ClipboardList,
                     },
                     {
                         title: 'Katalog Publik',
